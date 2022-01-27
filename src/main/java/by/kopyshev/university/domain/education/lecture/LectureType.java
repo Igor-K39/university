@@ -1,4 +1,6 @@
-package by.kopyshev.university.domain;
+package by.kopyshev.university.domain.education.lecture;
+
+import by.kopyshev.university.domain.NamedEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

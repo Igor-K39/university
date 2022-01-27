@@ -1,4 +1,8 @@
-package by.kopyshev.university.domain;
+package by.kopyshev.university.domain.education.role;
+
+import by.kopyshev.university.domain.BaseEntity;
+import by.kopyshev.university.domain.education.StudentGroup;
+import by.kopyshev.university.domain.Person;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -1,4 +1,9 @@
-package by.kopyshev.university.domain;
+package by.kopyshev.university.domain.education.lecture;
+
+import by.kopyshev.university.domain.*;
+import by.kopyshev.university.domain.building.LectureHall;
+import by.kopyshev.university.domain.education.StudentGroup;
+import by.kopyshev.university.domain.education.role.Educator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

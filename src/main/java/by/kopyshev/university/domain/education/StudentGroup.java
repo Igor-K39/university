@@ -1,4 +1,7 @@
-package by.kopyshev.university.domain;
+package by.kopyshev.university.domain.education;
+
+import by.kopyshev.university.domain.NamedEntity;
+import by.kopyshev.university.domain.education.role.Educator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
