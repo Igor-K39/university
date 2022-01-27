@@ -1,5 +1,7 @@
 package by.kopyshev.university.config;
 
+import by.kopyshev.university.web.json.JacksonObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,5 +36,10 @@ public class ApplicationConfig {
     @Bean
     public MessageSourceAccessor messageSourceAccessor() {
         return new MessageSourceAccessor(messageSource());
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return JacksonObjectMapper.getMapper();
     }
 }
