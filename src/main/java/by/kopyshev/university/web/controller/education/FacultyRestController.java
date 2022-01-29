@@ -1,6 +1,7 @@
 package by.kopyshev.university.web.controller.education;
 
 import by.kopyshev.university.dto.education.FacultyDTO;
+import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.service.education.FacultyService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,18 @@ public class FacultyRestController extends AbstractFacultyController {
         return super.get(id);
     }
 
+    @GetMapping("{id}/with-departments")
+    public FacultyWithDepartmentsDTO getWithDepartments(@PathVariable("id") int id) {
+        return super.getWithDepartments(id);
+    }
+
     @GetMapping
     public List<FacultyDTO> getAll() {
         return super.getAll();
+    }
+
+    @GetMapping("with-departments/")
+    public List<FacultyWithDepartmentsDTO> getAllWithDepartments() {
+        return super.getAllWithDepartments();
     }
 }

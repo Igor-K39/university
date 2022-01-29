@@ -2,6 +2,7 @@ package by.kopyshev.university.service.education;
 
 import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.dto.education.FacultyDTO;
+import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mappers.education.FacultyMapper;
 import by.kopyshev.university.repository.education.FacultyRepository;
@@ -39,9 +40,22 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
+    public FacultyWithDepartmentsDTO getWithDepartments(int id) {
+        Faculty faculty = repository.getWithDepartments(id)
+                .orElseThrow(() -> new NotFoundException(Faculty.class, "id = " + id));
+        return mapper.toDTOWithDepartments(faculty);
+    }
+
+    @Override
     public List<FacultyDTO> getAll() {
         List<Faculty> faculties = repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of());
         return mapper.toDTO(faculties);
+    }
+
+    @Override
+    public List<FacultyWithDepartmentsDTO> getAllWithDepartments() {
+        List<Faculty> faculties = repository.getAllWithDepartments().orElse(List.of());
+        return mapper.toDTOWithDepartments(faculties);
     }
 
     @Override

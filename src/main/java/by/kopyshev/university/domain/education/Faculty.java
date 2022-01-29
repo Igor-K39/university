@@ -7,6 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NamedEntityGraph(
+        name = "with-departments",
+        includeAllAttributes = true
+)
 @Entity
 @Table(name = "faculty")
 @Access(AccessType.FIELD)
@@ -15,21 +19,21 @@ public class Faculty extends NamedEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "dean_address")
-    private String deanAddress;
+    protected String deanAddress;
 
     @NotBlank
     @Size(min = 5, max = 40)
     @Column(name = "dean_email")
-    private String deanEmail;
+    protected String deanEmail;
 
     @NotBlank
     @Size(min = 5, max = 20)
     @Column(name = "dean_phone_number")
-    private String deanPhoneNumber;
+    protected String deanPhoneNumber;
 
     @Size(max = 1200)
     @Column(name = "description")
-    private String description;
+    protected String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
     private List<FacultyDepartment> facultyDepartments;
@@ -68,6 +72,14 @@ public class Faculty extends NamedEntity {
 
     public void setDeanPhoneNumber(String deanPhoneNumber) {
         this.deanPhoneNumber = deanPhoneNumber;
+    }
+
+    public List<FacultyDepartment> getFacultyDepartments() {
+        return facultyDepartments;
+    }
+
+    public void setFacultyDepartments(List<FacultyDepartment> facultyDepartments) {
+        this.facultyDepartments = facultyDepartments;
     }
 
     public String getDescription() {

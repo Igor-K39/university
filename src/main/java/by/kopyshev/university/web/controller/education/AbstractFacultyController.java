@@ -1,6 +1,7 @@
 package by.kopyshev.university.web.controller.education;
 
 import by.kopyshev.university.dto.education.FacultyDTO;
+import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.service.education.FacultyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,19 @@ public class AbstractFacultyController {
         return service.get(id);
     }
 
+    public FacultyWithDepartmentsDTO getWithDepartments(int id) {
+        log.info("Getting Faculty including departments with id {}", id);
+        return service.getWithDepartments(id);
+    }
+
     public List<FacultyDTO> getAll() {
         log.info("Getting all Faculties");
         return service.getAll();
+    }
+
+    public List<FacultyWithDepartmentsDTO> getAllWithDepartments() {
+        log.info("Getting all Faculties including departments");
+        return service.getAllWithDepartments();
     }
 
     public void update(FacultyDTO facultyDTO, int id) {

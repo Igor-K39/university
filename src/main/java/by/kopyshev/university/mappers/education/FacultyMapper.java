@@ -2,6 +2,9 @@ package by.kopyshev.university.mappers.education;
 
 import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.dto.education.FacultyDTO;
+import by.kopyshev.university.dto.education.FacultyDepartmentDTO;
+import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +15,26 @@ import java.util.stream.Collectors;
 @Component
 public class FacultyMapper {
     private final ModelMapper facultyMapper = new ModelMapper();
+    private final FacultyDepartmentMapper facultyDepartmentMapper;
+
+    public FacultyMapper(FacultyDepartmentMapper facultyDepartmentMapper) {
+        this.facultyDepartmentMapper = facultyDepartmentMapper;
+    }
 
     @PostConstruct
     public void setup() {
         facultyMapper.createTypeMap(Faculty.class, FacultyDTO.class);
+
+        Converter<Faculty, FacultyWithDepartmentsDTO> facultyWithDepartmentsDTOPostConverter = ctx -> {
+            List<FacultyDepartmentDTO> departmentDTOs =
+                    facultyDepartmentMapper.toDTO(ctx.getSource().getFacultyDepartments());
+            FacultyWithDepartmentsDTO destination = ctx.getDestination();
+            destination.setFacultyDepartments(departmentDTOs);
+            return destination;
+        };
+        facultyMapper.createTypeMap(Faculty.class, FacultyWithDepartmentsDTO.class)
+                .addMappings(mapper -> mapper.skip(FacultyWithDepartmentsDTO::setFacultyDepartments))
+                .setPostConverter(facultyWithDepartmentsDTOPostConverter);
     }
 
     public Faculty toEntity(FacultyDTO facultyDTO) {
@@ -28,5 +47,13 @@ public class FacultyMapper {
 
     public List<FacultyDTO> toDTO(List<Faculty> lectureHalls) {
         return lectureHalls.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    public FacultyWithDepartmentsDTO toDTOWithDepartments(Faculty faculty) {
+        return facultyMapper.map(faculty, FacultyWithDepartmentsDTO.class);
+    }
+
+    public List<FacultyWithDepartmentsDTO> toDTOWithDepartments(List<Faculty> faculties) {
+        return faculties.stream().map(this::toDTOWithDepartments).collect(Collectors.toList());
     }
 }
