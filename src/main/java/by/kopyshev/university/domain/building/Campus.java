@@ -7,6 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NamedEntityGraph(
+        name = "with-lecture-halls",
+        attributeNodes = @NamedAttributeNode(value = "lectureHalls")
+)
 @Entity
 @Table(name = "campus")
 @Access(AccessType.FIELD)
@@ -27,7 +31,7 @@ public class Campus extends NamedEntity {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "campus")
-    private List<LectureHall> lectureHallList;
+    private List<LectureHall> lectureHalls;
 
     public Campus() {
     }
@@ -61,6 +65,14 @@ public class Campus extends NamedEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<LectureHall> getLectureHalls() {
+        return List.copyOf(lectureHalls);
+    }
+
+    public void setLectureHalls(List<LectureHall> lectureHalls) {
+        this.lectureHalls = List.copyOf(lectureHalls);
     }
 
     @Override

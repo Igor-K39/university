@@ -10,14 +10,14 @@ public class CampusDTO extends NamedEntity {
 
     @NotBlank
     @Size(min = 1, max = 8)
-    private String number;
+    protected String number;
 
     @NotBlank
     @Size(min = 5, max = 100)
-    private String address;
+    protected String address;
 
     @Size(max = 1200)
-    private String description;
+    protected String description;
 
     public CampusDTO() {
     }
@@ -52,7 +52,8 @@ public class CampusDTO extends NamedEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CampusDTO campusDTO = (CampusDTO) o;
-        return Objects.equals(number, campusDTO.number) && Objects.equals(address, campusDTO.address) && Objects.equals(description, campusDTO.description);
+        return Objects.equals(number, campusDTO.number) && Objects.equals(address, campusDTO.address)
+                && Objects.equals(description, campusDTO.description);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package by.kopyshev.university.web.controller.building;
 
 import by.kopyshev.university.dto.building.CampusDTO;
+import by.kopyshev.university.dto.building.CampusWithHallsDTO;
 import by.kopyshev.university.service.building.CampusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +34,19 @@ public abstract class AbstractCampusController {
         return campusService.getByNumber(number);
     }
 
+    public CampusDTO getWithHalls(int id) {
+        log.info("Getting campus including halls with id = {}", id);
+        return campusService.getWithHalls(id);
+    }
+
     public List<CampusDTO> getAll() {
         log.info("Getting all campuses");
         return campusService.getAll();
+    }
+
+    public List<CampusWithHallsDTO> getAllWithHalls() {
+        log.info("Getting all campuses including halls");
+        return campusService.getAllWithHalls();
     }
 
     public void update(CampusDTO campusDTO, int id) {

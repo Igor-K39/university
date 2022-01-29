@@ -2,6 +2,7 @@ package by.kopyshev.university.service.building;
 
 import by.kopyshev.university.domain.building.Campus;
 import by.kopyshev.university.dto.building.CampusDTO;
+import by.kopyshev.university.dto.building.CampusWithHallsDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mappers.building.CampusMapper;
 import by.kopyshev.university.repository.building.CampusRepository;
@@ -44,9 +45,22 @@ public class CampusServiceImpl implements CampusService {
     }
 
     @Override
+    public CampusWithHallsDTO getWithHalls(int id) {
+        Campus campus = repository.getWithHalls(id)
+                .orElseThrow(() -> new NotFoundException(CampusWithHallsDTO.class, "id = " + id));
+        return mapper.toDTOWithHalls(campus);
+    }
+
+    @Override
     public List<CampusDTO> getAll() {
         List<Campus> campuses = repository.getAll().orElse(List.of());
         return mapper.toDTO(campuses);
+    }
+
+    @Override
+    public List<CampusWithHallsDTO> getAllWithHalls() {
+        List<Campus> campuses = repository.getAllWithHalls().orElse(List.of());
+        return mapper.toDTOWithHalls(campuses);
     }
 
     @Override

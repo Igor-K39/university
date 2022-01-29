@@ -1,6 +1,7 @@
 package by.kopyshev.university.repository.building;
 
 import by.kopyshev.university.domain.building.Campus;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,14 @@ import java.util.Optional;
 public interface CampusRepository extends JpaRepository<Campus, Integer> {
 
     Optional<Campus> getByNumber(@Param("number") String number);
+
+    @EntityGraph(value = "with-lecture-halls")
+    @Query("SELECT c FROM Campus c WHERE c.id = :id")
+    Optional<Campus> getWithHalls(@Param("id") int id);
+
+    @EntityGraph(value = "with-lecture-halls")
+    @Query("SELECT c FROM Campus c ORDER BY c.number")
+    Optional<List<Campus>> getAllWithHalls();
 
     @Query("SELECT c FROM Campus c ORDER BY c.name")
     Optional<List<Campus>> getAll();
