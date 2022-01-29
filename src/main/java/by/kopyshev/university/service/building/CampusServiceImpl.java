@@ -6,6 +6,7 @@ import by.kopyshev.university.dto.building.CampusWithHallsDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mappers.building.CampusMapper;
 import by.kopyshev.university.repository.building.CampusRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,7 @@ public class CampusServiceImpl implements CampusService {
 
     @Override
     public List<CampusDTO> getAll() {
-        List<Campus> campuses = repository.getAll().orElse(List.of());
+        List<Campus> campuses = repository.getAll(Sort.by(Sort.Direction.ASC, "number")).orElse(List.of());
         return mapper.toDTO(campuses);
     }
 

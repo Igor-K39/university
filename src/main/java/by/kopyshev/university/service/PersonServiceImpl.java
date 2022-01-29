@@ -5,6 +5,7 @@ import by.kopyshev.university.dto.PersonDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mappers.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +46,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonDTO> getAll() {
-        List<Person> personList = repository.getAll().orElse(List.of());
+        Sort sort = Sort.by(Sort.Direction.ASC, "last_name", "first_name", "middle_name");
+        List<Person> personList = repository.getAll(sort).orElse(List.of());
         return mapper.toDTO(personList);
     }
 

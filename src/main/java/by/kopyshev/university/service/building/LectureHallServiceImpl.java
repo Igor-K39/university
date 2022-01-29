@@ -6,6 +6,7 @@ import by.kopyshev.university.dto.building.LectureHallUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mappers.building.LectureHallMapper;
 import by.kopyshev.university.repository.building.LectureHallRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,7 @@ public class LectureHallServiceImpl implements LectureHallService {
 
     @Override
     public List<LectureHallDTO> getAll() {
-        List<LectureHall> lectureHalls = repository.getAll().orElse(List.of());
+        List<LectureHall> lectureHalls = repository.getAll(Sort.by(Sort.Direction.ASC, "number")).orElse(List.of());
         return mapper.toDTO(lectureHalls);
     }
 
