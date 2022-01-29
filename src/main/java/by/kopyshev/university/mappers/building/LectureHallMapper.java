@@ -3,7 +3,6 @@ package by.kopyshev.university.mappers.building;
 import by.kopyshev.university.domain.building.Campus;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.dto.building.LectureHallDTO;
-import by.kopyshev.university.dto.building.LectureHallUpdateDTO;
 import by.kopyshev.university.repository.building.CampusRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -33,19 +32,19 @@ public class LectureHallMapper {
                 .addMappings(mapper -> mapper.skip(LectureHallDTO::setCampusId))
                 .setPostConverter(lectureHallDTOPostConverter);
 
-        Converter<LectureHallUpdateDTO, LectureHall> lectureHallUpdatePostConverter = ctx -> {
+        Converter<LectureHallDTO, LectureHall> lectureHallUpdatePostConverter = ctx -> {
             Campus campus = campusRepository.getById(ctx.getSource().getCampusId());
             LectureHall lectureHall = ctx.getDestination();
             lectureHall.setCampus(campus);
             return lectureHall;
         };
-        lectureHallMapper.createTypeMap(LectureHallUpdateDTO.class, LectureHall.class)
+        lectureHallMapper.createTypeMap(LectureHallDTO.class, LectureHall.class)
                 .addMappings(mapper -> mapper.skip(LectureHall::setCampus))
                 .setPostConverter(lectureHallUpdatePostConverter);
     }
 
-    public LectureHall toEntity(LectureHallUpdateDTO updateDTO) {
-        return lectureHallMapper.map(updateDTO, LectureHall.class);
+    public LectureHall toEntity(LectureHallDTO lectureHallDTO) {
+        return lectureHallMapper.map(lectureHallDTO, LectureHall.class);
     }
 
     public LectureHallDTO toDTO(LectureHall lectureHall) {

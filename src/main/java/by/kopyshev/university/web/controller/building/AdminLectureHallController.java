@@ -1,7 +1,6 @@
 package by.kopyshev.university.web.controller.building;
 
 import by.kopyshev.university.dto.building.LectureHallDTO;
-import by.kopyshev.university.dto.building.LectureHallUpdateDTO;
 import by.kopyshev.university.service.building.LectureHallService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = AdminLectureHallController.ADMIN_HALL_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminLectureHallController extends AbstractLectureHallRestController {
+public class AdminLectureHallController extends AbstractLectureHallController {
     public static final String ADMIN_HALL_REST_URL = "/api/admin/halls/";
 
     public AdminLectureHallController(LectureHallService service) {
@@ -23,8 +22,8 @@ public class AdminLectureHallController extends AbstractLectureHallRestControlle
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LectureHallDTO> createWithLocation(@RequestBody @Valid LectureHallUpdateDTO hallUpdateDTO) {
-        LectureHallDTO created = super.create(hallUpdateDTO);
+    public ResponseEntity<LectureHallDTO> createWithLocation(@RequestBody @Valid LectureHallDTO lectureHallDTO) {
+        LectureHallDTO created = super.create(lectureHallDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_HALL_REST_URL + "{id}")
                 .buildAndExpand(created.id()).toUri();
@@ -49,8 +48,8 @@ public class AdminLectureHallController extends AbstractLectureHallRestControlle
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid LectureHallUpdateDTO hallUpdateDTO, @PathVariable int id) {
-        super.update(hallUpdateDTO, id);
+    public void update(@RequestBody @Valid LectureHallDTO lectureHallDTO, @PathVariable int id) {
+        super.update(lectureHallDTO, id);
     }
 
     @DeleteMapping("{id}")

@@ -10,7 +10,7 @@ import java.util.List;
 import static by.kopyshev.university.util.ValidationUtil.assureIdConsistent;
 
 public class AbstractFacultyDepartmentController {
-    private static final Logger log = LoggerFactory.getLogger(AbstractFacultyController.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractFacultyDepartmentController.class);
 
     private final FacultyDepartmentService service;
 

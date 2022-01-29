@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = LectureHallController.HALL_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class LectureHallController extends AbstractLectureHallRestController {
+public class LectureHallController extends AbstractLectureHallController {
     public static final String HALL_REST_URL = "/api/halls/";
 
     public LectureHallController(LectureHallService service) {

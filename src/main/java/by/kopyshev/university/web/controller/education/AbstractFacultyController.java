@@ -40,7 +40,7 @@ public class AbstractFacultyController {
     }
 
     public void delete(int id) {
-        log.info("Deleting campus with id {}", id);
+        log.info("Deleting Faculty with id {}", id);
         service.delete(id);
     }
 }

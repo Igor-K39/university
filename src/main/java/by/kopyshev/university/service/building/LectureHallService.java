@@ -1,13 +1,12 @@
 package by.kopyshev.university.service.building;
 
 import by.kopyshev.university.dto.building.LectureHallDTO;
-import by.kopyshev.university.dto.building.LectureHallUpdateDTO;
 
 import java.util.List;
 
 public interface LectureHallService {
 
-    LectureHallDTO create(LectureHallUpdateDTO updateDTO);
+    LectureHallDTO create(LectureHallDTO updateDTO);
 
     LectureHallDTO get(int id);
 
@@ -15,7 +14,7 @@ public interface LectureHallService {
 
     List<LectureHallDTO> getAll();
 
-    void update(LectureHallUpdateDTO updateDTO);
+    void update(LectureHallDTO updateDTO);
 
     void delete(int id);
 }

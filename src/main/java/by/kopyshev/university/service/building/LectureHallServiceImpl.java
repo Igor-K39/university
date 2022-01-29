@@ -26,7 +26,7 @@ public class LectureHallServiceImpl implements LectureHallService {
     }
 
     @Override
-    public LectureHallDTO create(LectureHallUpdateDTO updateDTO) {
+    public LectureHallDTO create(LectureHallDTO updateDTO) {
         checkNew(updateDTO);
         LectureHall saved = repository.save(mapper.toEntity(updateDTO));
         return mapper.toDTO(saved);
@@ -54,10 +54,10 @@ public class LectureHallServiceImpl implements LectureHallService {
 
     @Override
     @Transactional
-    public void update(LectureHallUpdateDTO updateDTO) {
-        int id = updateDTO.id();
+    public void update(LectureHallDTO lectureHallDTO) {
+        int id = lectureHallDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(LectureHall.class, "id = " + id));
-        repository.save(mapper.toEntity(updateDTO));
+        repository.save(mapper.toEntity(lectureHallDTO));
     }
 
     @Override

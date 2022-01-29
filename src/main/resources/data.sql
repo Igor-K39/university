@@ -143,7 +143,7 @@ CREATE TABLE lecture
     discipline_id    INTEGER     NOT NULL,
     lecture_type     VARCHAR(20) NOT NULL,
     lecture_hall_id  INTEGER,
-    educator_id      INTEGER     NOT NULL,
+    educator_id      INTEGER,
     student_group_id INTEGER     NOT NULL,
     date             DATE        NOT NULL,
     FOREIGN KEY (discipline_id) REFERENCES discipline ON DELETE CASCADE,

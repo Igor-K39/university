@@ -29,7 +29,6 @@ public class Lecture extends BaseEntity {
     @JoinColumn(name = "lecture_hall_id")
     private LectureHall lectureHall;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "educator_id")
     private Educator educator;

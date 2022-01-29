@@ -19,7 +19,7 @@ public abstract class AbstractPersonController {
     }
 
     public PersonDTO create(PersonDTO personDTO) {
-        log.info("Creating a new person from {}", personDTO);
+        log.info("Creating a new Person from {}", personDTO);
         return personService.create(personDTO);
     }
 
@@ -45,7 +45,7 @@ public abstract class AbstractPersonController {
     }
 
     public void delete(int id) {
-        log.info("Deleting campus with id {}", id);
+        log.info("Deleting Person with id {}", id);
         personService.delete(id);
     }
 }
