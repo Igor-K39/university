@@ -1,43 +1,23 @@
 package by.kopyshev.university.domain.education;
 
-import by.kopyshev.university.domain.NamedEntity;
+public enum StudyType {
+    FULL_TIME("Дневная форма обучения", "Дневная"),
+    PART_TIME("Заочная форма обучения", "Заочная"),
+    DISTANCE("Дистанционная форма обучения", "Дистанционная");
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+    private final String name;
+    private final String shortName;
 
-@Entity
-@Table(name = "study_type")
-@Access(AccessType.FIELD)
-public class StudyType extends NamedEntity {
-
-    @NotBlank
-    @Size(min = 2, max = 8)
-    @Column(name = "short_name")
-    private String shortName;
-
-    public StudyType() {
+    StudyType(String name, String shortName) {
+        this.name = name;
+        this.shortName = shortName;
     }
 
-    public StudyType(Integer id, String name, String shortName) {
-        super(id, name);
-        this.shortName = shortName;
+    public String getName() {
+        return name;
     }
 
     public String getShortName() {
         return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    @Override
-    public String toString() {
-        return "StudyType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", shortName='" + shortName + '\'' +
-                '}';
     }
 }

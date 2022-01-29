@@ -3,6 +3,7 @@ package by.kopyshev.university.domain.education.role;
 import by.kopyshev.university.domain.BaseEntity;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.domain.Person;
+import by.kopyshev.university.domain.education.FacultyDepartment;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +21,7 @@ public class Educator extends BaseEntity {
     private Person person;
 
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 2, max = 50)
     @Column(name = "position")
     private String position;
 
@@ -28,8 +29,12 @@ public class Educator extends BaseEntity {
     @JoinColumn(name = "lecture_hall_id")
     private LectureHall lectureHall;
 
+    @ManyToOne
+    @JoinColumn(name = "faculty_department_id")
+    private FacultyDepartment facultyDepartment;
+
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 2, max = 50)
     @Column(name = "academic_degree")
     private String academicDegree;
 
@@ -38,16 +43,6 @@ public class Educator extends BaseEntity {
     private String phoneNumber;
 
     public Educator() {
-    }
-
-    public Educator(Integer id, Person person, String position, LectureHall lectureHall,
-                    String academicDegree, String phoneNumber) {
-        super(id);
-        this.person = person;
-        this.position = position;
-        this.lectureHall = lectureHall;
-        this.academicDegree = academicDegree;
-        this.phoneNumber = phoneNumber;
     }
 
     public Person getPerson() {
@@ -74,6 +69,14 @@ public class Educator extends BaseEntity {
         this.lectureHall = lectureHall;
     }
 
+    public FacultyDepartment getFacultyDepartment() {
+        return facultyDepartment;
+    }
+
+    public void setFacultyDepartment(FacultyDepartment facultyDepartment) {
+        this.facultyDepartment = facultyDepartment;
+    }
+
     public String getAcademicDegree() {
         return academicDegree;
     }
@@ -97,6 +100,7 @@ public class Educator extends BaseEntity {
                 ", person=" + person +
                 ", position='" + position + '\'' +
                 ", lectureHall=" + lectureHall +
+                ", facultyDepartment=" + facultyDepartment +
                 ", academicDegree='" + academicDegree + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';

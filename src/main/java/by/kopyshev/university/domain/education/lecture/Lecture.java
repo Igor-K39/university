@@ -20,8 +20,8 @@ public class Lecture extends BaseEntity {
     private Discipline discipline;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "lecture_type_id")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "lecture_type")
     private LectureType lectureType;
 
     @NotNull

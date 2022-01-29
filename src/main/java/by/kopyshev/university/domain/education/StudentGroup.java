@@ -2,29 +2,27 @@ package by.kopyshev.university.domain.education;
 
 import by.kopyshev.university.domain.NamedEntity;
 import by.kopyshev.university.domain.education.role.Educator;
+import by.kopyshev.university.domain.education.role.Student;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "student_group")
 @Access(AccessType.FIELD)
 public class StudentGroup extends NamedEntity {
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "speciality_id")
     private Speciality speciality;
 
-    @ManyToOne
-    @JoinColumn(name = "specialization_id")
-    private Specialization specialization;
-
-    @ManyToOne
-    @JoinColumn(name = "study_type_id")
+    @NotNull
+    @Column(name = "study_type")
+    @Enumerated(EnumType.STRING)
     private StudyType studyType;
 
     @NotNull
@@ -37,20 +35,20 @@ public class StudentGroup extends NamedEntity {
     @Column(name = "admission")
     private LocalDate admission;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "curator_id")
     private Educator curator;
 
-//    private List<>
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "studentGroup")
+    private List<Student> students;
 
     public StudentGroup() {
     }
 
-    public StudentGroup(Integer id, String name, Speciality speciality, Specialization specialization,
-                        StudyType studyType, Integer currentEducationYear, LocalDate admission, Educator curator) {
+    public StudentGroup(Integer id, String name, Speciality speciality, StudyType studyType,
+                        Integer currentEducationYear, LocalDate admission, Educator curator) {
         super(id, name);
         this.speciality = speciality;
-        this.specialization = specialization;
         this.studyType = studyType;
         this.currentEducationYear = currentEducationYear;
         this.admission = admission;
@@ -63,14 +61,6 @@ public class StudentGroup extends NamedEntity {
 
     public void setSpeciality(Speciality speciality) {
         this.speciality = speciality;
-    }
-
-    public Specialization getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(Specialization specialization) {
-        this.specialization = specialization;
     }
 
     public StudyType getStudyType() {
@@ -111,7 +101,6 @@ public class StudentGroup extends NamedEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", speciality=" + speciality +
-                ", specialization=" + specialization +
                 ", studyType=" + studyType +
                 ", currentEducationYear=" + currentEducationYear +
                 ", admission=" + admission +

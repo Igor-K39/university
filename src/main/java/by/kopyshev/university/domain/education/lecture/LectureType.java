@@ -1,35 +1,26 @@
 package by.kopyshev.university.domain.education.lecture;
 
-import by.kopyshev.university.domain.NamedEntity;
+public enum LectureType {
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+    LECTURE_TIME("Лекция", "ЛК"),
+    LABORATORY_TIME("Лабораторна работа", "ЛР"),
+    TEST_TIME("Обязательная контрольная работа", "ОКР"),
+    CONSULTING_TIME("Консультация", "Консульт."),
+    EXAMINE_TIME("Экзамен", "Экз.");
 
-@Entity
-@Table(name = "lecture_type")
-@Access(AccessType.FIELD)
-public class LectureType extends NamedEntity {
+    private final String name;
+    private final String shortName;
 
-    @NotBlank
-    @Size(min = 2, max = 8)
-    @Column(name = "short_name")
-    private String shortName;
-
-    public LectureType() {
-    }
-
-    public LectureType(Integer id, String name, String shortName) {
-        super(id, name);
+    LectureType(String name, String shortName) {
+        this.name = name;
         this.shortName = shortName;
     }
 
-    @Override
-    public String toString() {
-        return "LectureType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", shortName='" + shortName + '\'' +
-                '}';
+    public String getName() {
+        return name;
+    }
+
+    public String getShortName() {
+        return shortName;
     }
 }

@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Table(name = "speciality")
@@ -27,9 +26,6 @@ public class Speciality extends NamedEntity {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "speciality")
-    private List<Specialization> specializations;
 
     public Speciality() {
     }

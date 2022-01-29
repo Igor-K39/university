@@ -35,7 +35,7 @@ public class FacultyDepartment extends NamedEntity {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "faculty_id", nullable = false)
+    @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "facultyDepartment")

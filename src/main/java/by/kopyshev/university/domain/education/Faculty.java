@@ -24,7 +24,7 @@ public class Faculty extends NamedEntity {
 
     @NotBlank
     @Size(min = 5, max = 20)
-    @Column(name = "dean_phone_number", nullable = false)
+    @Column(name = "dean_phone_number")
     private String deanPhoneNumber;
 
     @Size(max = 1200)

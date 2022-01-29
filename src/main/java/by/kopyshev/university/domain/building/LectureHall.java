@@ -23,10 +23,10 @@ public class LectureHall extends BaseEntity {
     @JoinColumn(name = "campus_id")
     private Campus campus;
 
-    @NotBlank
-    @Size(min = 1, max = 80)
+    @NotNull
     @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private LectureHallType type;
 
     @NotNull
     @Column(name = "capacity")
@@ -42,7 +42,8 @@ public class LectureHall extends BaseEntity {
     public LectureHall() {
     }
 
-    public LectureHall(Integer id, String number, Campus campus, String type, Integer capacity, String description) {
+    public LectureHall(Integer id, String number, Campus campus, LectureHallType type, Integer capacity,
+                       String description) {
         super(id);
         this.number = number;
         this.campus = campus;
@@ -67,11 +68,11 @@ public class LectureHall extends BaseEntity {
         this.campus = campus;
     }
 
-    public String getType() {
+    public LectureHallType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(LectureHallType type) {
         this.type = type;
     }
 
