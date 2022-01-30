@@ -95,6 +95,14 @@ public class StudentGroup extends NamedEntity {
         this.curator = curator;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public String toString() {
         return "StudentGroup{" +

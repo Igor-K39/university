@@ -1,8 +1,7 @@
-package by.kopyshev.university.dto.education;
+package by.kopyshev.university.dto.education.group;
 
 import by.kopyshev.university.domain.education.StudyType;
 import by.kopyshev.university.dto.NamedDTO;
-import by.kopyshev.university.dto.education.role.EducatorDTO;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -10,9 +9,9 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class StudentGroupDTO extends NamedDTO {
+public class StudentGroupUpdateDTO extends NamedDTO {
 
-    private SpecialityDTO specialityDTO;
+    private Integer specialityId;
 
     @NotNull
     private StudyType studyType;
@@ -25,27 +24,27 @@ public class StudentGroupDTO extends NamedDTO {
     @NotNull
     private LocalDate admission;
 
-    private EducatorDTO curator;
+    private Integer curatorId;
 
-    public StudentGroupDTO() {
+    public StudentGroupUpdateDTO() {
     }
 
-    public StudentGroupDTO(Integer id, String name, SpecialityDTO specialityDTO, StudyType studyType,
-                           Integer currentEducationYear, LocalDate admission, EducatorDTO curator) {
+    public StudentGroupUpdateDTO(Integer id, String name, Integer specialityId, StudyType studyType,
+                                 Integer currentEducationYear, LocalDate admission, Integer curatorId) {
         super(id, name);
-        this.specialityDTO = specialityDTO;
+        this.specialityId = specialityId;
         this.studyType = studyType;
         this.currentEducationYear = currentEducationYear;
         this.admission = admission;
-        this.curator = curator;
+        this.curatorId = curatorId;
     }
 
-    public SpecialityDTO getSpecialityDTO() {
-        return specialityDTO;
+    public Integer getSpecialityId() {
+        return specialityId;
     }
 
-    public void setSpecialityDTO(SpecialityDTO specialityId) {
-        this.specialityDTO = specialityId;
+    public void setSpecialityId(Integer specialityId) {
+        this.specialityId = specialityId;
     }
 
     public StudyType getStudyType() {
@@ -72,31 +71,31 @@ public class StudentGroupDTO extends NamedDTO {
         this.admission = admission;
     }
 
-    public EducatorDTO getCurator() {
-        return curator;
+    public Integer getCuratorId() {
+        return curatorId;
     }
 
-    public void setCurator(EducatorDTO curator) {
-        this.curator = curator;
+    public void setCuratorId(Integer curatorId) {
+        this.curatorId = curatorId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StudentGroupDTO)) return false;
+        if (!(o instanceof StudentGroupUpdateDTO)) return false;
         if (!super.equals(o)) return false;
-        StudentGroupDTO that = (StudentGroupDTO) o;
-        return Objects.equals(specialityDTO, that.specialityDTO)
+        StudentGroupUpdateDTO that = (StudentGroupUpdateDTO) o;
+        return Objects.equals(specialityId, that.specialityId)
                 && getStudyType() == that.getStudyType()
                 && Objects.equals(getCurrentEducationYear(), that.getCurrentEducationYear())
                 && Objects.equals(getAdmission(), that.getAdmission())
-                && Objects.equals(getCurator(), that.getCurator());
+                && Objects.equals(getCuratorId(), that.getCuratorId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), specialityDTO, getStudyType(),
-                getCurrentEducationYear(), getAdmission(), getCurator());
+        return Objects.hash(super.hashCode(), specialityId, getStudyType(),
+                getCurrentEducationYear(), getAdmission(), getCuratorId());
     }
 
     @Override
@@ -104,11 +103,11 @@ public class StudentGroupDTO extends NamedDTO {
         return "StudentGroup{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", speciality=" + specialityDTO +
+                ", speciality=" + specialityId +
                 ", studyType=" + studyType +
                 ", currentEducationYear=" + currentEducationYear +
                 ", admission=" + admission +
-                ", curator=" + curator +
+                ", curator=" + curatorId +
                 '}';
     }
 }

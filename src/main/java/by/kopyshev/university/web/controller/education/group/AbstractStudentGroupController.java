@@ -1,7 +1,7 @@
 package by.kopyshev.university.web.controller.education.group;
 
-import by.kopyshev.university.dto.education.StudentGroupDTO;
-import by.kopyshev.university.dto.education.StudentGroupUpdateDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupUpdateDTO;
 import by.kopyshev.university.service.education.StudentGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

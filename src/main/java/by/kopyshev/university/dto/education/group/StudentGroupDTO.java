@@ -1,7 +1,9 @@
-package by.kopyshev.university.dto.education;
+package by.kopyshev.university.dto.education.group;
 
 import by.kopyshev.university.domain.education.StudyType;
 import by.kopyshev.university.dto.NamedDTO;
+import by.kopyshev.university.dto.education.SpecialityDTO;
+import by.kopyshev.university.dto.education.role.EducatorDTO;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -9,42 +11,42 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class StudentGroupUpdateDTO extends NamedDTO {
+public class StudentGroupDTO extends NamedDTO {
 
-    private Integer specialityId;
+    protected SpecialityDTO specialityDTO;
 
     @NotNull
-    private StudyType studyType;
+    protected StudyType studyType;
 
     @NotNull
     @Positive
     @Max(8)
-    private Integer currentEducationYear;
+    protected Integer currentEducationYear;
 
     @NotNull
-    private LocalDate admission;
+    protected LocalDate admission;
 
-    private Integer curatorId;
+    protected EducatorDTO curator;
 
-    public StudentGroupUpdateDTO() {
+    public StudentGroupDTO() {
     }
 
-    public StudentGroupUpdateDTO(Integer id, String name, Integer specialityId, StudyType studyType,
-                                 Integer currentEducationYear, LocalDate admission, Integer curatorId) {
+    public StudentGroupDTO(Integer id, String name, SpecialityDTO specialityDTO, StudyType studyType,
+                           Integer currentEducationYear, LocalDate admission, EducatorDTO curator) {
         super(id, name);
-        this.specialityId = specialityId;
+        this.specialityDTO = specialityDTO;
         this.studyType = studyType;
         this.currentEducationYear = currentEducationYear;
         this.admission = admission;
-        this.curatorId = curatorId;
+        this.curator = curator;
     }
 
-    public Integer getSpecialityId() {
-        return specialityId;
+    public SpecialityDTO getSpecialityDTO() {
+        return specialityDTO;
     }
 
-    public void setSpecialityId(Integer specialityId) {
-        this.specialityId = specialityId;
+    public void setSpecialityDTO(SpecialityDTO specialityId) {
+        this.specialityDTO = specialityId;
     }
 
     public StudyType getStudyType() {
@@ -71,31 +73,31 @@ public class StudentGroupUpdateDTO extends NamedDTO {
         this.admission = admission;
     }
 
-    public Integer getCuratorId() {
-        return curatorId;
+    public EducatorDTO getCurator() {
+        return curator;
     }
 
-    public void setCuratorId(Integer curatorId) {
-        this.curatorId = curatorId;
+    public void setCurator(EducatorDTO curator) {
+        this.curator = curator;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StudentGroupUpdateDTO)) return false;
+        if (!(o instanceof StudentGroupDTO)) return false;
         if (!super.equals(o)) return false;
-        StudentGroupUpdateDTO that = (StudentGroupUpdateDTO) o;
-        return Objects.equals(specialityId, that.specialityId)
+        StudentGroupDTO that = (StudentGroupDTO) o;
+        return Objects.equals(specialityDTO, that.specialityDTO)
                 && getStudyType() == that.getStudyType()
                 && Objects.equals(getCurrentEducationYear(), that.getCurrentEducationYear())
                 && Objects.equals(getAdmission(), that.getAdmission())
-                && Objects.equals(getCuratorId(), that.getCuratorId());
+                && Objects.equals(getCurator(), that.getCurator());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), specialityId, getStudyType(),
-                getCurrentEducationYear(), getAdmission(), getCuratorId());
+        return Objects.hash(super.hashCode(), specialityDTO, getStudyType(),
+                getCurrentEducationYear(), getAdmission(), getCurator());
     }
 
     @Override
@@ -103,11 +105,11 @@ public class StudentGroupUpdateDTO extends NamedDTO {
         return "StudentGroup{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", speciality=" + specialityId +
+                ", speciality=" + specialityDTO +
                 ", studyType=" + studyType +
                 ", currentEducationYear=" + currentEducationYear +
                 ", admission=" + admission +
-                ", curator=" + curatorId +
+                ", curator=" + curator +
                 '}';
     }
 }

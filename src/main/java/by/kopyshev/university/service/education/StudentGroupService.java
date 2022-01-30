@@ -1,7 +1,7 @@
 package by.kopyshev.university.service.education;
 
-import by.kopyshev.university.dto.education.StudentGroupDTO;
-import by.kopyshev.university.dto.education.StudentGroupUpdateDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupUpdateDTO;
 
 import java.util.List;
 
