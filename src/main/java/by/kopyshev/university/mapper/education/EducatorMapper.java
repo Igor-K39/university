@@ -1,11 +1,12 @@
-package by.kopyshev.university.mapper.education.role;
+package by.kopyshev.university.mapper.education;
 
 import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.domain.education.role.Educator;
-import by.kopyshev.university.dto.education.role.EducatorDTO;
-import by.kopyshev.university.dto.education.role.EducatorUpdateDTO;
+import by.kopyshev.university.dto.education.educator.EducatorDTO;
+import by.kopyshev.university.dto.education.educator.EducatorPreviewDTO;
+import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
 import by.kopyshev.university.repository.PersonRepository;
 import by.kopyshev.university.repository.building.LectureHallRepository;
 import by.kopyshev.university.repository.education.FacultyDepartmentRepository;
@@ -24,7 +25,7 @@ public class EducatorMapper {
     private final LectureHallRepository lectureHallRepository;
     private final FacultyDepartmentRepository facultyDepartmentRepository;
 
-    public EducatorMapper(PersonRepository personRepository, LectureHallRepository lectureHallRepository, 
+    public EducatorMapper(PersonRepository personRepository, LectureHallRepository lectureHallRepository,
                           FacultyDepartmentRepository facultyDepartmentRepository) {
         this.personRepository = personRepository;
         this.lectureHallRepository = lectureHallRepository;
@@ -38,7 +39,7 @@ public class EducatorMapper {
             Person person = personRepository.getById(source.getPersonId());
             LectureHall lectureHall = lectureHallRepository.getById(source.getLectureHallId());
             FacultyDepartment facultyDepartment = facultyDepartmentRepository.getById(source.getFacultyDepartmentId());
-            
+
             Educator destination = ctx.getDestination();
             destination.setPerson(person);
             destination.setLectureHall(lectureHall);
@@ -63,6 +64,21 @@ public class EducatorMapper {
                 .addMappings(mapper -> mapper.skip(EducatorDTO::setLectureHallId))
                 .addMappings(mapper -> mapper.skip(EducatorDTO::setFacultyDepartmentId))
                 .setPostConverter(toDTOPostConverter);
+
+        Converter<Educator, EducatorPreviewDTO> toPreviewDTOPostConverter = ctx -> {
+            Person person = ctx.getSource().getPerson();
+            String name = person.getLastName() + " " +
+                    person.getFirstName().substring(0, 0) + "." +
+                    person.getMiddleName().substring(0, 0) + ".";
+            ctx.getDestination().setName(name);
+            return ctx.getDestination();
+        };
+        educatorMapper.createTypeMap(Educator.class, EducatorPreviewDTO.class)
+                .addMappings(mapper -> mapper.map(s -> s.getLectureHall().getId(), EducatorPreviewDTO::setLectureHallId))
+                .addMappings(mapper -> mapper.map(s -> s.getFacultyDepartment().getId(),
+                        EducatorPreviewDTO::setFacultyDepartmentId))
+                .addMappings(mapper -> mapper.map(s -> s.getPerson().getId(), EducatorPreviewDTO::setPersonId))
+                .setPostConverter(toPreviewDTOPostConverter);
     }
 
     public Educator toEntity(EducatorUpdateDTO educatorUpdateDTO) {
@@ -73,7 +89,15 @@ public class EducatorMapper {
         return educatorMapper.map(educator, EducatorDTO.class);
     }
 
+    public EducatorPreviewDTO toPreviewDTO(Educator educator) {
+        return educatorMapper.map(educator, EducatorPreviewDTO.class);
+    }
+
     public List<EducatorDTO> toDTO(List<Educator> educators) {
         return educators.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    public List<EducatorPreviewDTO> toPreviewDTO(List<Educator> educators) {
+        return educators.stream().map(this::toPreviewDTO).collect(Collectors.toList());
     }
 }

@@ -1,7 +1,7 @@
-package by.kopyshev.university.web.controller.education.role;
+package by.kopyshev.university.web.controller.education.educator;
 
-import by.kopyshev.university.dto.education.role.EducatorDTO;
-import by.kopyshev.university.service.education.role.EducatorService;
+import by.kopyshev.university.dto.education.educator.EducatorDTO;
+import by.kopyshev.university.service.education.EducatorService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

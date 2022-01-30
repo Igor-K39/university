@@ -3,7 +3,7 @@ package by.kopyshev.university.dto.education.group;
 import by.kopyshev.university.domain.education.StudyType;
 import by.kopyshev.university.dto.NamedDTO;
 import by.kopyshev.university.dto.education.SpecialityDTO;
-import by.kopyshev.university.dto.education.role.EducatorDTO;
+import by.kopyshev.university.dto.education.educator.EducatorDTO;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;

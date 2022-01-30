@@ -1,4 +1,4 @@
-package by.kopyshev.university.repository.education.role;
+package by.kopyshev.university.repository.education;
 
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.domain.education.role.Educator;

@@ -1,8 +1,8 @@
 package by.kopyshev.university.web.controller.education.role;
 
-import by.kopyshev.university.dto.education.role.StudentDTO;
-import by.kopyshev.university.dto.education.role.StudentUpdateDTO;
-import by.kopyshev.university.service.education.role.StudentService;
+import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
+import by.kopyshev.university.service.education.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

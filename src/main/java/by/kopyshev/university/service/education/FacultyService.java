@@ -1,7 +1,7 @@
 package by.kopyshev.university.service.education;
 
 import by.kopyshev.university.dto.education.FacultyDTO;
-import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
+import by.kopyshev.university.dto.education.FacultyWithDepartmentsDTO;
 
 import java.util.List;
 

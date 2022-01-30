@@ -1,8 +1,8 @@
-package by.kopyshev.university.web.controller.education.role;
+package by.kopyshev.university.web.controller.education.educator;
 
-import by.kopyshev.university.dto.education.role.EducatorDTO;
-import by.kopyshev.university.dto.education.role.EducatorUpdateDTO;
-import by.kopyshev.university.service.education.role.EducatorService;
+import by.kopyshev.university.dto.education.educator.EducatorDTO;
+import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
+import by.kopyshev.university.service.education.EducatorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package by.kopyshev.university.web.controller.education.faculty;
 
 import by.kopyshev.university.dto.education.FacultyDTO;
-import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
+import by.kopyshev.university.dto.education.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.service.education.FacultyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

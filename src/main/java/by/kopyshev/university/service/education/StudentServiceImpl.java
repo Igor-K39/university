@@ -1,11 +1,11 @@
-package by.kopyshev.university.service.education.role;
+package by.kopyshev.university.service.education;
 
 import by.kopyshev.university.domain.education.role.Student;
-import by.kopyshev.university.dto.education.role.StudentDTO;
-import by.kopyshev.university.dto.education.role.StudentUpdateDTO;
+import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mapper.education.role.StudentMapper;
-import by.kopyshev.university.repository.education.role.StudentRepository;
+import by.kopyshev.university.mapper.education.StudentMapper;
+import by.kopyshev.university.repository.education.StudentRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

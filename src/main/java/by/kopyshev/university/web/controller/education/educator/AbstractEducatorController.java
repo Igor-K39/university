@@ -1,8 +1,9 @@
-package by.kopyshev.university.web.controller.education.role;
+package by.kopyshev.university.web.controller.education.educator;
 
-import by.kopyshev.university.dto.education.role.EducatorDTO;
-import by.kopyshev.university.dto.education.role.EducatorUpdateDTO;
-import by.kopyshev.university.service.education.role.EducatorService;
+import by.kopyshev.university.dto.education.educator.EducatorDTO;
+import by.kopyshev.university.dto.education.educator.EducatorPreviewDTO;
+import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
+import by.kopyshev.university.service.education.EducatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +30,19 @@ public class AbstractEducatorController {
         return service.get(id);
     }
 
+    public EducatorPreviewDTO getPreview(int id) {
+        log.info("Getting EducatorPreview with id {}", id);
+        return service.getPreview(id);
+    }
+
     public List<EducatorDTO> getAll(Integer facultyDepartmentId) {
         log.info("Getting all Educators of faculty department {}", facultyDepartmentId);
         return service.getAll(facultyDepartmentId);
+    }
+
+    public List<EducatorPreviewDTO> getAllPreview(Integer facultyDepartmentId) {
+        log.info("Getting all EducatorPreview of faculty department {}", facultyDepartmentId);
+        return service.getAllPreview(facultyDepartmentId);
     }
 
     public void update(EducatorUpdateDTO educatorDTO, int id) {

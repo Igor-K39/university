@@ -1,8 +1,8 @@
-package by.kopyshev.university.mapper.education.role;
+package by.kopyshev.university.mapper.education;
 
 import by.kopyshev.university.domain.education.role.Student;
-import by.kopyshev.university.dto.education.role.StudentDTO;
-import by.kopyshev.university.dto.education.role.StudentUpdateDTO;
+import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
 import by.kopyshev.university.mapper.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
 import by.kopyshev.university.repository.education.StudentGroupRepository;

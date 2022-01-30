@@ -3,7 +3,7 @@ package by.kopyshev.university.mapper.education;
 import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.dto.education.FacultyDTO;
 import by.kopyshev.university.dto.education.FacultyDepartmentDTO;
-import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
+import by.kopyshev.university.dto.education.FacultyWithDepartmentsDTO;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

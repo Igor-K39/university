@@ -3,7 +3,7 @@ package by.kopyshev.university.service.education;
 import by.kopyshev.university.domain.education.lecture.Discipline;
 import by.kopyshev.university.dto.education.lecture.DisciplineDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mapper.education.lecture.DisciplineMapper;
+import by.kopyshev.university.mapper.education.DisciplineMapper;
 import by.kopyshev.university.repository.education.DisciplineRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

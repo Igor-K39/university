@@ -1,11 +1,12 @@
-package by.kopyshev.university.service.education.role;
+package by.kopyshev.university.service.education;
 
 import by.kopyshev.university.domain.education.role.Educator;
-import by.kopyshev.university.dto.education.role.EducatorDTO;
-import by.kopyshev.university.dto.education.role.EducatorUpdateDTO;
+import by.kopyshev.university.dto.education.educator.EducatorDTO;
+import by.kopyshev.university.dto.education.educator.EducatorPreviewDTO;
+import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mapper.education.role.EducatorMapper;
-import by.kopyshev.university.repository.education.role.EducatorRepository;
+import by.kopyshev.university.mapper.education.EducatorMapper;
+import by.kopyshev.university.repository.education.EducatorRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,18 +36,22 @@ public class EducatorServiceImpl implements EducatorService {
 
     @Override
     public EducatorDTO get(int id) {
-        Educator educator = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Educator.class, "id = " + id));
-        return mapper.toDTO(educator);
+        return mapper.toDTO(getById(id));
+    }
+
+    @Override
+    public EducatorPreviewDTO getPreview(int id) {
+        return mapper.toPreviewDTO(getById(id));
     }
 
     @Override
     public List<EducatorDTO> getAll(Integer facultyDepartmentId) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "last_name", "first_name", "middle_name");
-        List<Educator> facultyDepartments = isNull(facultyDepartmentId)
-                ? repository.getAll(Sort.by(Sort.Direction.ASC, "person.")).orElse(List.of())
-                : repository.getAll(facultyDepartmentId).orElse(List.of());
-        return mapper.toDTO(facultyDepartments);
+        return mapper.toDTO(getAllByDepartment(facultyDepartmentId));
+    }
+
+    @Override
+    public List<EducatorPreviewDTO> getAllPreview(Integer facultyDepartmentId) {
+        return mapper.toPreviewDTO(getAllByDepartment(facultyDepartmentId));
     }
 
     @Override
@@ -60,5 +65,16 @@ public class EducatorServiceImpl implements EducatorService {
     @Override
     public void delete(int id) {
         checkNotFoundWithId(repository.delete(id) != 0, Educator.class, id);
+    }
+
+    private Educator getById(int id) {
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(Educator.class, "id = " + id));
+    }
+
+    private List<Educator> getAllByDepartment(Integer facultyDepartmentId) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "person.lastName", "person.firstName", "person.middleName");
+        return isNull(facultyDepartmentId)
+                ? repository.getAll(sort).orElse(List.of())
+                : repository.getAll(facultyDepartmentId).orElse(List.of());
     }
 }

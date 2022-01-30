@@ -1,7 +1,7 @@
 package by.kopyshev.university.web.controller.education.faculty;
 
 import by.kopyshev.university.dto.education.FacultyDTO;
-import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
+import by.kopyshev.university.dto.education.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.service.education.FacultyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

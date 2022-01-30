@@ -1,4 +1,4 @@
-package by.kopyshev.university.dto.education.role;
+package by.kopyshev.university.dto.education.student;
 
 import by.kopyshev.university.dto.BaseDTO;
 

@@ -1,8 +1,8 @@
-package by.kopyshev.university.service.education.role;
+package by.kopyshev.university.service.education;
 
 
-import by.kopyshev.university.dto.education.role.StudentDTO;
-import by.kopyshev.university.dto.education.role.StudentUpdateDTO;
+import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
 
 import java.util.List;
 
