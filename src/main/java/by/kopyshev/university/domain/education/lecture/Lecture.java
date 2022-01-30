@@ -1,6 +1,6 @@
 package by.kopyshev.university.domain.education.lecture;
 
-import by.kopyshev.university.domain.*;
+import by.kopyshev.university.domain.BaseEntity;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.domain.education.StudentGroup;
 import by.kopyshev.university.domain.education.role.Educator;
@@ -9,6 +9,35 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@NamedEntityGraph(name = "all-attributes",
+        attributeNodes = {
+            @NamedAttributeNode(value = "discipline", subgraph = "lecture.discipline"),
+                @NamedAttributeNode(value = "lectureHall", subgraph = "lecture.lectureHall"),
+                @NamedAttributeNode(value = "educator", subgraph = "lecture.educator"),
+                @NamedAttributeNode(value = "studentGroup")
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "lecture.discipline",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "shortName"),
+                        @NamedAttributeNode(value = "facultyDepartment")
+                }),
+                @NamedSubgraph(name = "lecture.lectureHall",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "campus"),
+                        @NamedAttributeNode(value = "number")
+                }),
+                @NamedSubgraph(name = "lecture.educator",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "person"),
+                        @NamedAttributeNode(value = "lectureHall"),
+                        @NamedAttributeNode(value = "facultyDepartment", subgraph = "department.faculty")
+                }),
+                @NamedSubgraph(name = "department.faculty",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "faculty")
+                })
+        })
 @Entity
 @Table(name = "lecture")
 @Access(AccessType.FIELD)
