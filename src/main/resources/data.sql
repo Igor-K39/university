@@ -130,7 +130,7 @@ CREATE TABLE student
     id                 INTEGER DEFAULT NEXTVAL('global_sequence') PRIMARY KEY,
     record_book_number VARCHAR(15) NOT NULL,
     person_id          INTEGER     NOT NULL,
-    student_group_id   INTEGER     NOT NULL,
+    student_group_id   INTEGER,
     leader             BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
     FOREIGN KEY (student_group_id) REFERENCES student_group (id) ON DELETE SET NULL
