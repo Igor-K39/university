@@ -2,6 +2,7 @@ package by.kopyshev.university.service.education;
 
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.dto.education.FacultyDepartmentDTO;
+import by.kopyshev.university.dto.education.FacultyDepartmentWithDisciplinesDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.education.FacultyDepartmentMapper;
 import by.kopyshev.university.repository.education.FacultyDepartmentRepository;
@@ -40,11 +41,26 @@ public class FacultyDepartmentServiceImpl implements FacultyDepartmentService {
     }
 
     @Override
+    public FacultyDepartmentWithDisciplinesDTO getWithDisciplines(int id) {
+        FacultyDepartment facultyDepartment = repository.getWithDisciplines(id)
+                .orElseThrow(() -> new NotFoundException(FacultyDepartment.class, "id = " + id));
+        return mapper.toDTOWithDisciplines(facultyDepartment);
+    }
+
+    @Override
     public List<FacultyDepartmentDTO> getAll(Integer facultyId) {
         List<FacultyDepartment> facultyDepartments = isNull(facultyId)
                 ? repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of())
                 : repository.getAll(facultyId).orElse(List.of());
         return mapper.toDTO(facultyDepartments);
+    }
+
+    @Override
+    public List<FacultyDepartmentWithDisciplinesDTO> getAllWithDisciplines(Integer facultyId) {
+        List<FacultyDepartment> facultyDepartments = isNull(facultyId)
+                ? repository.getAllWithDisciplines().orElse(List.of())
+                : repository.getAllByFacultyWithDisciplines(facultyId).orElse(List.of());
+        return mapper.toDTOWithDisciplines(facultyDepartments);
     }
 
     @Override

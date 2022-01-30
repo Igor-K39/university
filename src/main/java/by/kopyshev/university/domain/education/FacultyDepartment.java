@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NamedEntityGraph(name = "with-disciplines", includeAllAttributes = true)
 @Entity
 @Table(name = "faculty_department")
 @Access(AccessType.FIELD)
@@ -91,6 +92,14 @@ public class FacultyDepartment extends NamedEntity {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public List<Discipline> getDisciplines() {
+        return disciplines;
+    }
+
+    public void setDisciplines(List<Discipline> disciplines) {
+        this.disciplines = disciplines;
     }
 
     @Override
