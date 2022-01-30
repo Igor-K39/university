@@ -1,6 +1,7 @@
 package by.kopyshev.university.web.controller.education.group;
 
 import by.kopyshev.university.dto.education.group.StudentGroupDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupWithStudentsDTO;
 import by.kopyshev.university.service.education.StudentGroupService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +27,18 @@ public class StudentGroupRestController extends AbstractStudentGroupController {
         return super.get(id);
     }
 
+    @GetMapping("{id}/with-students")
+    public StudentGroupDTO getWithStudents(@PathVariable("id") int id) {
+        return super.getWithStudent(id);
+    }
+
     @GetMapping
     public List<StudentGroupDTO> getAll() {
         return super.getAll();
+    }
+
+    @GetMapping("with-students")
+    public List<StudentGroupWithStudentsDTO> getAllWithStudents() {
+        return super.getAllWithStudents();
     }
 }

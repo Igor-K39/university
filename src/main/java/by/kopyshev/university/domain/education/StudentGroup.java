@@ -11,6 +11,7 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
+@NamedEntityGraph(name = "with-students", includeAllAttributes = true)
 @Entity
 @Table(name = "student_group")
 @Access(AccessType.FIELD)

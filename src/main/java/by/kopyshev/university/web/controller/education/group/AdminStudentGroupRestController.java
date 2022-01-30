@@ -2,6 +2,7 @@ package by.kopyshev.university.web.controller.education.group;
 
 import by.kopyshev.university.dto.education.group.StudentGroupDTO;
 import by.kopyshev.university.dto.education.group.StudentGroupUpdateDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupWithStudentsDTO;
 import by.kopyshev.university.service.education.StudentGroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,9 +41,19 @@ public class AdminStudentGroupRestController extends AbstractStudentGroupControl
         return super.get(id);
     }
 
+    @GetMapping("{id}/with-students")
+    public StudentGroupDTO getWithStudents(@PathVariable("id") int id) {
+        return super.getWithStudent(id);
+    }
+
     @GetMapping
     public List<StudentGroupDTO> getAll() {
         return super.getAll();
+    }
+
+    @GetMapping("with-students")
+    public List<StudentGroupWithStudentsDTO> getAllWithStudents() {
+        return super.getAllWithStudents();
     }
 
     @PutMapping("{id}")

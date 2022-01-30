@@ -3,6 +3,7 @@ package by.kopyshev.university.service.education;
 import by.kopyshev.university.domain.education.StudentGroup;
 import by.kopyshev.university.dto.education.group.StudentGroupDTO;
 import by.kopyshev.university.dto.education.group.StudentGroupUpdateDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupWithStudentsDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.education.StudentGroupMapper;
 import by.kopyshev.university.repository.education.StudentGroupRepository;
@@ -34,15 +35,28 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Override
     public StudentGroupDTO get(int id) {
-        StudentGroup faculty = repository.findById(id)
+        StudentGroup group = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(StudentGroup.class, "id = " + id));
-        return mapper.toDTO(faculty);
+        return mapper.toDTO(group);
+    }
+
+    @Override
+    public StudentGroupWithStudentsDTO getWithStudents(int id) {
+        StudentGroup group = repository.getWithStudents(id)
+                .orElseThrow(() -> new NotFoundException(StudentGroup.class, "id = " + id));
+        return mapper.toDTOWithStudents(group);
     }
 
     @Override
     public List<StudentGroupDTO> getAll() {
-        List<StudentGroup> faculties = repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of());
-        return mapper.toDTO(faculties);
+        List<StudentGroup> groups = repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of());
+        return mapper.toDTO(groups);
+    }
+
+    @Override
+    public List<StudentGroupWithStudentsDTO> getAllWithStudents() {
+        List<StudentGroup> groups = repository.getAllWithStudents().orElse(List.of());
+        return mapper.toDTOWithStudents(groups);
     }
 
     @Override

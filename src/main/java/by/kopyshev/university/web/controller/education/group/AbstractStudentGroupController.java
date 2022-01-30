@@ -2,6 +2,7 @@ package by.kopyshev.university.web.controller.education.group;
 
 import by.kopyshev.university.dto.education.group.StudentGroupDTO;
 import by.kopyshev.university.dto.education.group.StudentGroupUpdateDTO;
+import by.kopyshev.university.dto.education.group.StudentGroupWithStudentsDTO;
 import by.kopyshev.university.service.education.StudentGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,19 @@ public class AbstractStudentGroupController {
         return service.get(id);
     }
 
+    public StudentGroupDTO getWithStudent(int id) {
+        log.info("Getting StudentGroup with id {} including students", id);
+        return service.getWithStudents(id);
+    }
+
     public List<StudentGroupDTO> getAll() {
-        log.info("Getting all Faculties");
+        log.info("Getting all StudentGroups");
         return service.getAll();
+    }
+
+    public List<StudentGroupWithStudentsDTO> getAllWithStudents() {
+        log.info("Getting all StudentGroups including students");
+        return service.getAllWithStudents();
     }
 
     public void update(StudentGroupUpdateDTO studentGroupUpdateDTO, int id) {
