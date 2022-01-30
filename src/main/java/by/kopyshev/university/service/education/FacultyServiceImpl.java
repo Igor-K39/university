@@ -4,7 +4,7 @@ import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.dto.education.FacultyDTO;
 import by.kopyshev.university.dto.education.role.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mappers.education.FacultyMapper;
+import by.kopyshev.university.mapper.education.FacultyMapper;
 import by.kopyshev.university.repository.education.FacultyRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

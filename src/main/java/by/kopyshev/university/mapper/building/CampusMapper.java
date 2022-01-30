@@ -1,4 +1,4 @@
-package by.kopyshev.university.mappers.building;
+package by.kopyshev.university.mapper.building;
 
 import by.kopyshev.university.domain.building.Campus;
 import by.kopyshev.university.dto.building.CampusDTO;

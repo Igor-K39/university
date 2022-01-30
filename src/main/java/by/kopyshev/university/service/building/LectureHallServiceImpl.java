@@ -2,9 +2,8 @@ package by.kopyshev.university.service.building;
 
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.dto.building.LectureHallDTO;
-import by.kopyshev.university.dto.building.LectureHallUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mappers.building.LectureHallMapper;
+import by.kopyshev.university.mapper.building.LectureHallMapper;
 import by.kopyshev.university.repository.building.LectureHallRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,7 @@ import by.kopyshev.university.domain.building.Campus;
 import by.kopyshev.university.dto.building.CampusDTO;
 import by.kopyshev.university.dto.building.CampusWithHallsDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mappers.building.CampusMapper;
+import by.kopyshev.university.mapper.building.CampusMapper;
 import by.kopyshev.university.repository.building.CampusRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

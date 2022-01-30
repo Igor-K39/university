@@ -1,9 +1,9 @@
-package by.kopyshev.university.mappers.education;
+package by.kopyshev.university.mapper.education;
 
 import by.kopyshev.university.domain.education.StudentGroup;
 import by.kopyshev.university.dto.education.StudentGroupDTO;
 import by.kopyshev.university.dto.education.StudentGroupUpdateDTO;
-import by.kopyshev.university.mappers.education.role.EducatorMapper;
+import by.kopyshev.university.mapper.education.role.EducatorMapper;
 import by.kopyshev.university.repository.education.SpecialityRepository;
 import by.kopyshev.university.repository.education.role.EducatorRepository;
 import org.modelmapper.Converter;

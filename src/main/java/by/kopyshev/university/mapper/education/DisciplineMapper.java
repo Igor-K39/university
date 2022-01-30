@@ -1,4 +1,4 @@
-package by.kopyshev.university.mappers.education;
+package by.kopyshev.university.mapper.education;
 
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.domain.education.lecture.Discipline;

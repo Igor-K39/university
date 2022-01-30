@@ -4,7 +4,7 @@ import by.kopyshev.university.domain.education.StudentGroup;
 import by.kopyshev.university.dto.education.StudentGroupDTO;
 import by.kopyshev.university.dto.education.StudentGroupUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mappers.education.StudentGroupMapper;
+import by.kopyshev.university.mapper.education.StudentGroupMapper;
 import by.kopyshev.university.repository.education.StudentGroupRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

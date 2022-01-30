@@ -3,7 +3,7 @@ package by.kopyshev.university.service;
 import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.dto.PersonDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mappers.PersonMapper;
+import by.kopyshev.university.mapper.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

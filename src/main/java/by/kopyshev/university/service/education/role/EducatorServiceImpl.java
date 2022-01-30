@@ -4,7 +4,7 @@ import by.kopyshev.university.domain.education.role.Educator;
 import by.kopyshev.university.dto.education.role.EducatorDTO;
 import by.kopyshev.university.dto.education.role.EducatorUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.mappers.education.role.EducatorMapper;
+import by.kopyshev.university.mapper.education.role.EducatorMapper;
 import by.kopyshev.university.repository.education.role.EducatorRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

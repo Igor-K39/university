@@ -1,4 +1,4 @@
-package by.kopyshev.university.web.controller.education;
+package by.kopyshev.university.web.controller.education.group;
 
 import by.kopyshev.university.dto.education.StudentGroupDTO;
 import by.kopyshev.university.service.education.StudentGroupService;

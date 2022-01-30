@@ -1,4 +1,4 @@
-package by.kopyshev.university.mappers.education.role;
+package by.kopyshev.university.mapper.education.role;
 
 import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.domain.building.LectureHall;

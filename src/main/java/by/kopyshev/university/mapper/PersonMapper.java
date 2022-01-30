@@ -1,4 +1,4 @@
-package by.kopyshev.university.mappers;
+package by.kopyshev.university.mapper;
 
 import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.dto.PersonDTO;

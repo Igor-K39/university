@@ -1,4 +1,4 @@
-package by.kopyshev.university.mappers.education;
+package by.kopyshev.university.mapper.education;
 
 import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.dto.education.FacultyDTO;
