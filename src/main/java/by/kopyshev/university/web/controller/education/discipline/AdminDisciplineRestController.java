@@ -1,6 +1,6 @@
 package by.kopyshev.university.web.controller.education.discipline;
 
-import by.kopyshev.university.dto.education.DisciplineDTO;
+import by.kopyshev.university.dto.education.lecture.DisciplineDTO;
 import by.kopyshev.university.service.education.DisciplineService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

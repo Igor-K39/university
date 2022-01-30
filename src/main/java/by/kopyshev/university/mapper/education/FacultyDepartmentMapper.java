@@ -4,6 +4,7 @@ import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.dto.education.FacultyDepartmentDTO;
 import by.kopyshev.university.dto.education.FacultyDepartmentWithDisciplinesDTO;
+import by.kopyshev.university.mapper.education.lecture.DisciplineMapper;
 import by.kopyshev.university.repository.education.FacultyRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;

@@ -1,4 +1,4 @@
-package by.kopyshev.university.dto.education;
+package by.kopyshev.university.dto.education.lecture;
 
 import by.kopyshev.university.dto.NamedDTO;
 

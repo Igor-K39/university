@@ -1,5 +1,7 @@
 package by.kopyshev.university.dto.education;
 
+import by.kopyshev.university.dto.education.lecture.DisciplineDTO;
+
 import java.util.List;
 
 public class FacultyDepartmentWithDisciplinesDTO extends FacultyDepartmentDTO {

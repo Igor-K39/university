@@ -1,8 +1,8 @@
-package by.kopyshev.university.mapper.education;
+package by.kopyshev.university.mapper.education.lecture;
 
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.domain.education.lecture.Discipline;
-import by.kopyshev.university.dto.education.DisciplineDTO;
+import by.kopyshev.university.dto.education.lecture.DisciplineDTO;
 import by.kopyshev.university.repository.education.FacultyDepartmentRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class DisciplineMapper {
-    private final ModelMapper facultyDepartmentMapper = new ModelMapper();
+    private final ModelMapper disciplineMapper = new ModelMapper();
     private final FacultyDepartmentRepository facultyDepartmentRepository;
 
     public DisciplineMapper(FacultyDepartmentRepository facultyDepartmentRepository) {
@@ -29,7 +29,7 @@ public class DisciplineMapper {
             ctx.getDestination().setFacultyDepartment(facultyDepartment);
             return ctx.getDestination();
         };
-        facultyDepartmentMapper.createTypeMap(DisciplineDTO.class, Discipline.class)
+        disciplineMapper.createTypeMap(DisciplineDTO.class, Discipline.class)
                 .addMappings(mapper -> mapper.skip(Discipline::setFacultyDepartment))
                 .setPostConverter(toEntityPostConverter);
 
@@ -37,20 +37,20 @@ public class DisciplineMapper {
             ctx.getDestination().setFacultyDepartmentId(ctx.getSource().getFacultyDepartment().getId());
             return ctx.getDestination();
         };
-        facultyDepartmentMapper.createTypeMap(Discipline.class, DisciplineDTO.class)
+        disciplineMapper.createTypeMap(Discipline.class, DisciplineDTO.class)
                 .addMappings(mapper -> mapper.skip(DisciplineDTO::setFacultyDepartmentId))
                 .setPostConverter(toDTOPostConverter);
     }
 
-    public Discipline toEntity(DisciplineDTO facultyDepartmentDTO) {
-        return facultyDepartmentMapper.map(facultyDepartmentDTO, Discipline.class);
+    public Discipline toEntity(DisciplineDTO disciplineDTO) {
+        return disciplineMapper.map(disciplineDTO, Discipline.class);
     }
 
-    public DisciplineDTO toDTO(Discipline facultyDepartment) {
-        return facultyDepartmentMapper.map(facultyDepartment, DisciplineDTO.class);
+    public DisciplineDTO toDTO(Discipline discipline) {
+        return disciplineMapper.map(discipline, DisciplineDTO.class);
     }
 
-    public List<DisciplineDTO> toDTO(List<Discipline> facultyDepartments) {
-        return facultyDepartments.stream().map(this::toDTO).collect(Collectors.toList());
+    public List<DisciplineDTO> toDTO(List<Discipline> disciplines) {
+        return disciplines.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }

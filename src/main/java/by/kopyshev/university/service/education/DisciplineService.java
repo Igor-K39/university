@@ -1,6 +1,6 @@
 package by.kopyshev.university.service.education;
 
-import by.kopyshev.university.dto.education.DisciplineDTO;
+import by.kopyshev.university.dto.education.lecture.DisciplineDTO;
 
 import java.util.List;
 
