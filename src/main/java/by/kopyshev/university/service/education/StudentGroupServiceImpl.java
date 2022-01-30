@@ -27,9 +27,9 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     }
 
     @Override
-    public StudentGroupDTO create(StudentGroupUpdateDTO facultyDTO) {
-        checkNew(facultyDTO);
-        StudentGroup saved = repository.save(mapper.toEntity(facultyDTO));
+    public StudentGroupDTO create(StudentGroupUpdateDTO studentGroupUpdateDTO) {
+        checkNew(studentGroupUpdateDTO);
+        StudentGroup saved = repository.save(mapper.toEntity(studentGroupUpdateDTO));
         return mapper.toDTO(saved);
     }
 
@@ -61,10 +61,10 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Override
     @Transactional
-    public void update(StudentGroupUpdateDTO facultyDTO) {
-        int id = facultyDTO.id();
+    public void update(StudentGroupUpdateDTO studentGroupUpdateDTO) {
+        int id = studentGroupUpdateDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(StudentGroup.class, "id = " + id));
-        repository.save(mapper.toEntity(facultyDTO));
+        repository.save(mapper.toEntity(studentGroupUpdateDTO));
     }
 
     @Override

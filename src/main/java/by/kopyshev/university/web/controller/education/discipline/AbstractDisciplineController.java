@@ -18,9 +18,9 @@ public class AbstractDisciplineController {
         this.service = service;
     }
 
-    public DisciplineDTO create(DisciplineDTO lectureHallUpdateDTO) {
-        log.info("Creating a new Discipline from {}", lectureHallUpdateDTO);
-        return service.create(lectureHallUpdateDTO);
+    public DisciplineDTO create(DisciplineDTO disciplineDTO) {
+        log.info("Creating a new Discipline from {}", disciplineDTO);
+        return service.create(disciplineDTO);
     }
 
     public DisciplineDTO get(int id) {
@@ -29,7 +29,7 @@ public class AbstractDisciplineController {
     }
 
     public List<DisciplineDTO> getAll(Integer departmentId) {
-        log.info("Getting all Disciplines of faculty {}", departmentId);
+        log.info("Getting all Disciplines of faculty department {}", departmentId);
         return service.getAll(departmentId);
     }
 

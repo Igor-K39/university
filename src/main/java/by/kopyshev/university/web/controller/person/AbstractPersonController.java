@@ -1,4 +1,4 @@
-package by.kopyshev.university.web.controller;
+package by.kopyshev.university.web.controller.person;
 
 import by.kopyshev.university.dto.PersonDTO;
 import by.kopyshev.university.service.PersonService;

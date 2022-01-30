@@ -23,16 +23,16 @@ public class LectureHallMapper {
 
     @PostConstruct
     public void setup() {
-        Converter<LectureHall, LectureHallDTO> lectureHallDTOPostConverter = ctx -> {
+        Converter<LectureHall, LectureHallDTO> toDTOPostConverter = ctx -> {
             LectureHallDTO destination = ctx.getDestination();
             destination.setCampusId(ctx.getSource().getCampus().id());
             return destination;
         };
         lectureHallMapper.createTypeMap(LectureHall.class, LectureHallDTO.class)
                 .addMappings(mapper -> mapper.skip(LectureHallDTO::setCampusId))
-                .setPostConverter(lectureHallDTOPostConverter);
+                .setPostConverter(toDTOPostConverter);
 
-        Converter<LectureHallDTO, LectureHall> lectureHallUpdatePostConverter = ctx -> {
+        Converter<LectureHallDTO, LectureHall> toUpdateDTOPostConverter = ctx -> {
             Campus campus = campusRepository.getById(ctx.getSource().getCampusId());
             LectureHall lectureHall = ctx.getDestination();
             lectureHall.setCampus(campus);
@@ -40,7 +40,7 @@ public class LectureHallMapper {
         };
         lectureHallMapper.createTypeMap(LectureHallDTO.class, LectureHall.class)
                 .addMappings(mapper -> mapper.skip(LectureHall::setCampus))
-                .setPostConverter(lectureHallUpdatePostConverter);
+                .setPostConverter(toUpdateDTOPostConverter);
     }
 
     public LectureHall toEntity(LectureHallDTO lectureHallDTO) {

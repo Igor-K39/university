@@ -18,9 +18,9 @@ public class AbstractSpecialityController {
         this.service = service;
     }
 
-    public SpecialityDTO create(SpecialityDTO facultyDTO) {
-        log.info("Creating a new Speciality from {}", facultyDTO);
-        return service.create(facultyDTO);
+    public SpecialityDTO create(SpecialityDTO specialityDTO) {
+        log.info("Creating a new Speciality from {}", specialityDTO);
+        return service.create(specialityDTO);
     }
 
     public SpecialityDTO get(int id) {
@@ -33,10 +33,10 @@ public class AbstractSpecialityController {
         return service.getAll();
     }
 
-    public void update(SpecialityDTO facultyDTO, int id) {
-        log.info("Updating Speciality with id {} by {} ", id, facultyDTO);
-        assureIdConsistent(facultyDTO, id);
-        service.update(facultyDTO);
+    public void update(SpecialityDTO specialityDTO, int id) {
+        log.info("Updating Speciality with id {} by {} ", id, specialityDTO);
+        assureIdConsistent(specialityDTO, id);
+        service.update(specialityDTO);
     }
 
     public void delete(int id) {

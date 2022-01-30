@@ -25,9 +25,9 @@ public class LectureHallServiceImpl implements LectureHallService {
     }
 
     @Override
-    public LectureHallDTO create(LectureHallDTO updateDTO) {
-        checkNew(updateDTO);
-        LectureHall saved = repository.save(mapper.toEntity(updateDTO));
+    public LectureHallDTO create(LectureHallDTO lectureHallDTO) {
+        checkNew(lectureHallDTO);
+        LectureHall saved = repository.save(mapper.toEntity(lectureHallDTO));
         return mapper.toDTO(saved);
     }
 

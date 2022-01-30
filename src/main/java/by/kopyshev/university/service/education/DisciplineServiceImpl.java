@@ -26,9 +26,9 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public DisciplineDTO create(DisciplineDTO facultyDepartmentDTO) {
-        checkNew(facultyDepartmentDTO);
-        Discipline saved = repository.save(mapper.toEntity(facultyDepartmentDTO));
+    public DisciplineDTO create(DisciplineDTO disciplineDTO) {
+        checkNew(disciplineDTO);
+        Discipline saved = repository.save(mapper.toEntity(disciplineDTO));
         return mapper.toDTO(saved);
     }
 
@@ -49,10 +49,10 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     @Transactional
-    public void update(DisciplineDTO facultyDepartmentDTO) {
-        int id = facultyDepartmentDTO.id();
+    public void update(DisciplineDTO disciplineDTO) {
+        int id = disciplineDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(Discipline.class, "id = " + id));
-        repository.save(mapper.toEntity(facultyDepartmentDTO));
+        repository.save(mapper.toEntity(disciplineDTO));
     }
 
     @Override

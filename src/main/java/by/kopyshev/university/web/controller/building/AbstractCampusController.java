@@ -35,7 +35,7 @@ public abstract class AbstractCampusController {
     }
 
     public CampusDTO getWithHalls(int id) {
-        log.info("Getting campus including halls with id = {}", id);
+        log.info("Getting campus with id = {} including halls", id);
         return campusService.getWithHalls(id);
     }
 

@@ -9,10 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = StudentRestController.ADMIN_STUDENT_REST_URL,
+        value = StudentRestController.STUDENT_REST_URL,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentRestController extends AbstractStudentController {
-    public static final String ADMIN_STUDENT_REST_URL = "/api/students/";
+    public static final String STUDENT_REST_URL = "/api/students/";
 
     public StudentRestController(StudentService service) {
         super(service);

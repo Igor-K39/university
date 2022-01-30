@@ -17,7 +17,7 @@ public interface FacultyDepartmentService {
 
     List<FacultyDepartmentWithDisciplinesDTO> getAllWithDisciplines(Integer facultyId);
 
-    void update(FacultyDepartmentDTO facultyDTO);
+    void update(FacultyDepartmentDTO facultyDepartmentDTO);
 
     void delete(int id);
 }

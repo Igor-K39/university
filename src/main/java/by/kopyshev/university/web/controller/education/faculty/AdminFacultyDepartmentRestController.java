@@ -26,8 +26,7 @@ public class AdminFacultyDepartmentRestController extends AbstractFacultyDepartm
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FacultyDepartmentDTO> createWithLocation(@RequestBody
-                                                                   @Valid
-                                                                           FacultyDepartmentDTO facultyDepartmentDTO) {
+                                                                   @Valid FacultyDepartmentDTO facultyDepartmentDTO) {
         FacultyDepartmentDTO created = super.create(facultyDepartmentDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_FACULTY_DEPARTMENT_REST_URL + "{id}")
@@ -59,8 +58,8 @@ public class AdminFacultyDepartmentRestController extends AbstractFacultyDepartm
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid FacultyDepartmentDTO facultyDTO, @PathVariable int id) {
-        super.update(facultyDTO, id);
+    public void update(@RequestBody @Valid FacultyDepartmentDTO facultyDepartmentDTO, @PathVariable int id) {
+        super.update(facultyDepartmentDTO, id);
     }
 
     @DeleteMapping("/{id}")

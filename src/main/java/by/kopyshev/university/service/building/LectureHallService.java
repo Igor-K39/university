@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LectureHallService {
 
-    LectureHallDTO create(LectureHallDTO updateDTO);
+    LectureHallDTO create(LectureHallDTO lectureHallDTO);
 
     LectureHallDTO get(int id);
 
@@ -14,7 +14,7 @@ public interface LectureHallService {
 
     List<LectureHallDTO> getAll();
 
-    void update(LectureHallDTO updateDTO);
+    void update(LectureHallDTO lectureHallDTO);
 
     void delete(int id);
 }

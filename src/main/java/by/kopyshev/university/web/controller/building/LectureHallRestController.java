@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = LectureHallController.HALL_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class LectureHallController extends AbstractLectureHallController {
-    public static final String HALL_REST_URL = "/api/halls/";
+@RequestMapping(value = LectureHallRestController.LECTURE_HALL_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class LectureHallRestController extends AbstractLectureHallController {
+    public static final String LECTURE_HALL_REST_URL = "/api/halls/";
 
-    public LectureHallController(LectureHallService service) {
+    public LectureHallRestController(LectureHallService service) {
         super(service);
     }
 

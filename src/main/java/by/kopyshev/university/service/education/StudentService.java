@@ -19,7 +19,7 @@ public interface StudentService {
 
     List<StudentPreviewDTO> getAllPreview(Integer studentGroupId);
 
-    void update(StudentUpdateDTO studentDTO);
+    void update(StudentUpdateDTO studentUpdateDTO);
 
     void delete(int id);
 }

@@ -26,8 +26,8 @@ public class AdminLectureRestController extends AbstractLectureController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LectureDTO> createWithLocation(@RequestBody @Valid LectureUpdateDTO facultyDepartmentDTO) {
-        LectureDTO created = super.create(facultyDepartmentDTO);
+    public ResponseEntity<LectureDTO> createWithLocation(@RequestBody @Valid LectureUpdateDTO lectureUpdateDTO) {
+        LectureDTO created = super.create(lectureUpdateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_LECTURE_REST_URL + "{id}")
                 .buildAndExpand(created.id()).toUri();
@@ -49,8 +49,8 @@ public class AdminLectureRestController extends AbstractLectureController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid LectureUpdateDTO lectureDTO, @PathVariable int id) {
-        super.update(lectureDTO, id);
+    public void update(@RequestBody @Valid LectureUpdateDTO lectureUpdateDTO, @PathVariable int id) {
+        super.update(lectureUpdateDTO, id);
     }
 
     @DeleteMapping("/{id}")

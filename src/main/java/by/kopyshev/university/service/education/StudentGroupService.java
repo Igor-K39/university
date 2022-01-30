@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StudentGroupService {
 
-    StudentGroupDTO create(StudentGroupUpdateDTO facultyDTO);
+    StudentGroupDTO create(StudentGroupUpdateDTO studentGroupUpdateDTO);
 
     StudentGroupDTO get(int id);
 
@@ -18,7 +18,7 @@ public interface StudentGroupService {
 
     List<StudentGroupWithStudentsDTO> getAllWithStudents();
 
-    void update(StudentGroupUpdateDTO facultyDTO);
+    void update(StudentGroupUpdateDTO studentGroupUpdateDTO);
 
     void delete(int id);
 }

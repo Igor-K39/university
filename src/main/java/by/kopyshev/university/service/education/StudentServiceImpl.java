@@ -56,10 +56,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public void update(StudentUpdateDTO facultyDepartmentDTO) {
-        int id = facultyDepartmentDTO.id();
+    public void update(StudentUpdateDTO studentUpdateDTO) {
+        int id = studentUpdateDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
-        repository.save(mapper.toEntity(facultyDepartmentDTO));
+        repository.save(mapper.toEntity(studentUpdateDTO));
     }
 
     @Override

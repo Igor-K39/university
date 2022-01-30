@@ -25,7 +25,7 @@ public class FacultyMapper {
     public void setup() {
         facultyMapper.createTypeMap(Faculty.class, FacultyDTO.class);
 
-        Converter<Faculty, FacultyWithDepartmentsDTO> facultyWithDepartmentsDTOPostConverter = ctx -> {
+        Converter<Faculty, FacultyWithDepartmentsDTO> toFacultyWithDepartmentsDTO = ctx -> {
             List<FacultyDepartmentDTO> departmentDTOs =
                     facultyDepartmentMapper.toDTO(ctx.getSource().getFacultyDepartments());
             FacultyWithDepartmentsDTO destination = ctx.getDestination();
@@ -34,7 +34,7 @@ public class FacultyMapper {
         };
         facultyMapper.createTypeMap(Faculty.class, FacultyWithDepartmentsDTO.class)
                 .addMappings(mapper -> mapper.skip(FacultyWithDepartmentsDTO::setFacultyDepartments))
-                .setPostConverter(facultyWithDepartmentsDTOPostConverter);
+                .setPostConverter(toFacultyWithDepartmentsDTO);
     }
 
     public Faculty toEntity(FacultyDTO facultyDTO) {
@@ -45,8 +45,8 @@ public class FacultyMapper {
         return facultyMapper.map(faculty, FacultyDTO.class);
     }
 
-    public List<FacultyDTO> toDTO(List<Faculty> lectureHalls) {
-        return lectureHalls.stream().map(this::toDTO).collect(Collectors.toList());
+    public List<FacultyDTO> toDTO(List<Faculty> faculty) {
+        return faculty.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public FacultyWithDepartmentsDTO toDTOWithDepartments(Faculty faculty) {

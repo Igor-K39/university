@@ -19,9 +19,9 @@ public class AbstractFacultyDepartmentController {
         this.service = service;
     }
 
-    public FacultyDepartmentDTO create(FacultyDepartmentDTO lectureHallUpdateDTO) {
-        log.info("Creating a new FacultyDepartment from {}", lectureHallUpdateDTO);
-        return service.create(lectureHallUpdateDTO);
+    public FacultyDepartmentDTO create(FacultyDepartmentDTO facultyDepartmentDTO) {
+        log.info("Creating a new FacultyDepartment from {}", facultyDepartmentDTO);
+        return service.create(facultyDepartmentDTO);
     }
 
     public FacultyDepartmentDTO get(int id) {

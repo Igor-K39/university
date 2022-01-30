@@ -19,7 +19,7 @@ public interface EducatorService {
 
     List<EducatorPreviewDTO> getAllPreview(Integer facultyDepartmentId);
 
-    void update(EducatorUpdateDTO educatorDTO);
+    void update(EducatorUpdateDTO educatorUpdateDTO);
 
     void delete(int id);
 }

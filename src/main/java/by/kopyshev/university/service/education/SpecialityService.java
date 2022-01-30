@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface SpecialityService {
 
-    SpecialityDTO create(SpecialityDTO facultyDTO);
+    SpecialityDTO create(SpecialityDTO specialityDTO);
 
     SpecialityDTO get(int id);
 
     List<SpecialityDTO> getAll();
 
-    void update(SpecialityDTO facultyDTO);
+    void update(SpecialityDTO specialityDTO);
 
     void delete(int id);
 }

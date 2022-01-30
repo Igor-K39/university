@@ -47,10 +47,10 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     @Transactional
-    public void update(LectureUpdateDTO facultyDepartmentDTO) {
-        int id = facultyDepartmentDTO.id();
+    public void update(LectureUpdateDTO lectureUpdateDTO) {
+        int id = lectureUpdateDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(Lecture.class, "id = " + id));
-        repository.save(mapper.toEntity(facultyDepartmentDTO));
+        repository.save(mapper.toEntity(lectureUpdateDTO));
     }
 
     @Override

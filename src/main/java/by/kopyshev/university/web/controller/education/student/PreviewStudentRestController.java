@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = StudentEducatorRestController.PREVIEW_STUDENT_REST_URL,
+        value = PreviewStudentRestController.PREVIEW_STUDENT_REST_URL,
         produces = MediaType.APPLICATION_JSON_VALUE)
-public class StudentEducatorRestController extends AbstractStudentController {
+public class PreviewStudentRestController extends AbstractStudentController {
     public static final String PREVIEW_STUDENT_REST_URL = "/api/preview/students";
 
-    protected StudentEducatorRestController(StudentService service) {
+    protected PreviewStudentRestController(StudentService service) {
         super(service);
     }
 

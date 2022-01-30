@@ -25,13 +25,13 @@ public class CampusMapper {
     public void setup() {
         campusMapper.createTypeMap(Campus.class, CampusDTO.class);
 
-        Converter<Campus, CampusWithHallsDTO> lectureHallDTOPostConverter = ctx -> {
+        Converter<Campus, CampusWithHallsDTO> toCampusWithHallsDTOPostConverter = ctx -> {
             List<LectureHallDTO> lectureHallDTOs = lectureHallMapper.toDTO(ctx.getSource().getLectureHalls());
             ctx.getDestination().setLectureHallsDTO(lectureHallDTOs);
             return ctx.getDestination();
         };
         campusMapper.createTypeMap(Campus.class, CampusWithHallsDTO.class)
-                .setPostConverter(lectureHallDTOPostConverter);
+                .setPostConverter(toCampusWithHallsDTOPostConverter);
     }
 
     public Campus toEntity(CampusDTO campusDTO) {

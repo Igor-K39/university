@@ -22,8 +22,8 @@ public class AdminSpecialityRestController extends AbstractSpecialityController 
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpecialityDTO> createWithLocation(@RequestBody @Valid SpecialityDTO facultyDTO) {
-        SpecialityDTO created = super.create(facultyDTO);
+    public ResponseEntity<SpecialityDTO> createWithLocation(@RequestBody @Valid SpecialityDTO specialityDTO) {
+        SpecialityDTO created = super.create(specialityDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_SPECIALITY_REST_URL + "{id}")
                 .buildAndExpand(created.id()).toUri();
@@ -43,8 +43,8 @@ public class AdminSpecialityRestController extends AbstractSpecialityController 
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid SpecialityDTO facultyDTO, @PathVariable int id) {
-        super.update(facultyDTO, id);
+    public void update(@RequestBody @Valid SpecialityDTO specialityDTO, @PathVariable int id) {
+        super.update(specialityDTO, id);
     }
 
     @DeleteMapping("{id}")

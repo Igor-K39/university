@@ -38,10 +38,10 @@ public class AbstractLectureController {
         return service.getAll(groupId, start, end);
     }
 
-    public void update(LectureUpdateDTO lectureDTO, int id) {
-        log.info("Updating Lecture with id {} by {} ", id, lectureDTO);
-        assureIdConsistent(lectureDTO, id);
-        service.update(lectureDTO);
+    public void update(LectureUpdateDTO lectureUpdateDTO, int id) {
+        log.info("Updating Lecture with id {} by {} ", id, lectureUpdateDTO);
+        assureIdConsistent(lectureUpdateDTO, id);
+        service.update(lectureUpdateDTO);
     }
 
     public void delete(int id) {

@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = StudentGroupRestController.ADMIN_STUDENT_GROUP_REST_URL,
+        value = StudentGroupRestController.STUDENT_GROUP_REST_URL,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentGroupRestController extends AbstractStudentGroupController {
-    public static final String ADMIN_STUDENT_GROUP_REST_URL = "/api/groups/";
+    public static final String STUDENT_GROUP_REST_URL = "/api/groups/";
 
     public StudentGroupRestController(StudentGroupService service) {
         super(service);

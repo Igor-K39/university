@@ -56,10 +56,10 @@ public class EducatorServiceImpl implements EducatorService {
 
     @Override
     @Transactional
-    public void update(EducatorUpdateDTO facultyDepartmentDTO) {
-        int id = facultyDepartmentDTO.id();
+    public void update(EducatorUpdateDTO educatorUpdateDTO) {
+        int id = educatorUpdateDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(Educator.class, "id = " + id));
-        repository.save(mapper.toEntity(facultyDepartmentDTO));
+        repository.save(mapper.toEntity(educatorUpdateDTO));
     }
 
     @Override

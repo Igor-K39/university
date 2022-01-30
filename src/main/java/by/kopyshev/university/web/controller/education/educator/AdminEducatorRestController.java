@@ -46,8 +46,8 @@ public class AdminEducatorRestController extends AbstractEducatorController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid EducatorUpdateDTO facultyDTO, @PathVariable int id) {
-        super.update(facultyDTO, id);
+    public void update(@RequestBody @Valid EducatorUpdateDTO educatorUpdateDTO, @PathVariable int id) {
+        super.update(educatorUpdateDTO, id);
     }
 
     @DeleteMapping("/{id}")

@@ -25,9 +25,9 @@ public class SpecialityServiceImpl implements SpecialityService {
     }
 
     @Override
-    public SpecialityDTO create(SpecialityDTO facultyDTO) {
-        checkNew(facultyDTO);
-        Speciality saved = repository.save(mapper.toEntity(facultyDTO));
+    public SpecialityDTO create(SpecialityDTO specialityDTO) {
+        checkNew(specialityDTO);
+        Speciality saved = repository.save(mapper.toEntity(specialityDTO));
         return mapper.toDTO(saved);
     }
 
@@ -46,10 +46,10 @@ public class SpecialityServiceImpl implements SpecialityService {
 
     @Override
     @Transactional
-    public void update(SpecialityDTO facultyDTO) {
-        int id = facultyDTO.id();
+    public void update(SpecialityDTO specialityDTO) {
+        int id = specialityDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(Speciality.class, "id = " + id));
-        repository.save(mapper.toEntity(facultyDTO));
+        repository.save(mapper.toEntity(specialityDTO));
     }
 
     @Override

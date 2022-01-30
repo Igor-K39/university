@@ -27,8 +27,8 @@ public class AdminStudentGroupRestController extends AbstractStudentGroupControl
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StudentGroupDTO> createWithLocation(@RequestBody
-                                                                        @Valid StudentGroupUpdateDTO facultyDTO) {
-        StudentGroupDTO created = super.create(facultyDTO);
+                                                              @Valid StudentGroupUpdateDTO studentGroupUpdateDTO) {
+        StudentGroupDTO created = super.create(studentGroupUpdateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_STUDENT_GROUP_REST_URL + "{id}")
                 .buildAndExpand(created.id()).toUri();

@@ -41,15 +41,15 @@ public class SpecialityMapper {
                 .setPostConverter(toDTOPostConverter);
     }
 
-    public Speciality toEntity(SpecialityDTO facultyDTO) {
-        return specialityMapper.map(facultyDTO, Speciality.class);
+    public Speciality toEntity(SpecialityDTO specialityDTO) {
+        return specialityMapper.map(specialityDTO, Speciality.class);
     }
 
-    public SpecialityDTO toDTO(Speciality faculty) {
-        return specialityMapper.map(faculty, SpecialityDTO.class);
+    public SpecialityDTO toDTO(Speciality speciality) {
+        return specialityMapper.map(speciality, SpecialityDTO.class);
     }
 
-    public List<SpecialityDTO> toDTO(List<Speciality> lectureHalls) {
-        return lectureHalls.stream().map(this::toDTO).collect(Collectors.toList());
+    public List<SpecialityDTO> toDTO(List<Speciality> specialities) {
+        return specialities.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }

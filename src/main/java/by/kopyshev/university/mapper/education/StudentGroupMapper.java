@@ -70,8 +70,8 @@ public class StudentGroupMapper {
                 .setPostConverter(toStudentGroupWithStudentsPostConverter);
     }
 
-    public StudentGroup toEntity(StudentGroupUpdateDTO facultyDTO) {
-        return studentGroupMapper.map(facultyDTO, StudentGroup.class);
+    public StudentGroup toEntity(StudentGroupUpdateDTO studentGroupUpdateDTO) {
+        return studentGroupMapper.map(studentGroupUpdateDTO, StudentGroup.class);
     }
 
     public StudentGroupDTO toDTO(StudentGroup studentGroup) {

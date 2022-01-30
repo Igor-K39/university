@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface LectureService {
 
-    LectureDTO create(LectureUpdateDTO studentUpdateDTO);
+    LectureDTO create(LectureUpdateDTO lectureUpdateDTO);
 
     LectureDTO get(int id);
 
     List<LectureDTO> getAll(Integer studentGroupId, LocalDate start, LocalDate end);
 
-    void update(LectureUpdateDTO studentDTO);
+    void update(LectureUpdateDTO lectureUpdateDTO);
 
     void delete(int id);
 }

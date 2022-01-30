@@ -25,8 +25,8 @@ public class AdminStudentRestController extends AbstractStudentController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDTO> createWithLocation(@RequestBody @Valid StudentUpdateDTO facultyDepartmentDTO) {
-        StudentDTO created = super.create(facultyDepartmentDTO);
+    public ResponseEntity<StudentDTO> createWithLocation(@RequestBody @Valid StudentUpdateDTO studentUpdateDTO) {
+        StudentDTO created = super.create(studentUpdateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_STUDENT_REST_URL + "{id}")
                 .buildAndExpand(created.id()).toUri();
@@ -46,8 +46,8 @@ public class AdminStudentRestController extends AbstractStudentController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid StudentUpdateDTO facultyDTO, @PathVariable int id) {
-        super.update(facultyDTO, id);
+    public void update(@RequestBody @Valid StudentUpdateDTO studentUpdateDTO, @PathVariable int id) {
+        super.update(studentUpdateDTO, id);
     }
 
     @DeleteMapping("{id}")

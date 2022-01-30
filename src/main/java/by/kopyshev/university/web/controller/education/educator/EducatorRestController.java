@@ -9,10 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = EducatorRestController.ADMIN_EDUCATOR_REST_URL,
+        value = EducatorRestController.EDUCATOR_REST_URL,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class EducatorRestController extends AbstractEducatorController {
-    public static final String ADMIN_EDUCATOR_REST_URL = "/api/educators";
+    public static final String EDUCATOR_REST_URL = "/api/educators";
 
     public EducatorRestController(EducatorService service) {
         super(service);
@@ -24,7 +24,7 @@ public class EducatorRestController extends AbstractEducatorController {
     }
 
     @GetMapping
-    public List<EducatorDTO> getAll(@RequestParam(value = "departmentId", required = false) Integer facultyId) {
-        return super.getAll(facultyId);
+    public List<EducatorDTO> getAll(@RequestParam(value = "departmentId", required = false) Integer departmentId) {
+        return super.getAll(departmentId);
     }
 }
