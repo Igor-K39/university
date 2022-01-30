@@ -1,6 +1,7 @@
-package by.kopyshev.university.web.controller.education.role;
+package by.kopyshev.university.web.controller.education.student;
 
 import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentPreviewDTO;
 import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
 import by.kopyshev.university.service.education.StudentService;
 import org.slf4j.Logger;
@@ -29,10 +30,22 @@ public class AbstractStudentController {
         return service.get(id);
     }
 
-    public List<StudentDTO> getAll(Integer facultyDepartmentId) {
-        log.info("Getting all Students of faculty department {}", facultyDepartmentId);
-        return service.getAll(facultyDepartmentId);
+    public StudentPreviewDTO getPreview(int id) {
+        log.info("Getting StudentPreview with id {}", id);
+        return service.getPreview(id);
     }
+
+    public List<StudentDTO> getAll(Integer groupId) {
+        log.info("Getting all Students of faculty department {}", groupId);
+        return service.getAll(groupId);
+    }
+
+    public List<StudentPreviewDTO> getAllPreview(Integer groupId) {
+        log.info("Getting all StudentPreview of faculty department {}", groupId);
+        return service.getAllPreview(groupId);
+    }
+
+
 
     public void update(StudentUpdateDTO studentDTO, int id) {
         log.info("Updating Student with id {} by {} ", id, studentDTO);

@@ -1,4 +1,4 @@
-package by.kopyshev.university.web.controller.education.role;
+package by.kopyshev.university.web.controller.education.student;
 
 import by.kopyshev.university.dto.education.student.StudentDTO;
 import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
@@ -40,8 +40,8 @@ public class AdminStudentRestController extends AbstractStudentController {
     }
 
     @GetMapping
-    public List<StudentDTO> getAll(@RequestParam(value = "groupId", required = false) Integer departmentId) {
-        return super.getAll(departmentId);
+    public List<StudentDTO> getAll(@RequestParam(value = "groupId", required = false) Integer groupId) {
+        return super.getAll(groupId);
     }
 
     @PutMapping("{id}")

@@ -1,7 +1,9 @@
 package by.kopyshev.university.mapper.education;
 
+import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.domain.education.role.Student;
 import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentPreviewDTO;
 import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
 import by.kopyshev.university.mapper.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
@@ -53,6 +55,18 @@ public class StudentMapper {
                 .addMappings(mapper -> mapper.skip(StudentDTO::setPersonDTO))
                 .addMappings(mapper -> mapper.skip(StudentDTO::setStudentGroupId))
                 .setPostConverter(toDTOPostConverter);
+
+        Converter<Student, StudentPreviewDTO> toDTOPreviewPostConverter = ctx -> {
+            Person person = ctx.getSource().getPerson();
+            String name = person.getLastName() + " " + person.getFirstName();
+            StudentPreviewDTO destination = ctx.getDestination();
+            destination.setName(name);
+            destination.setPersonId(person.getId());
+            return ctx.getDestination();
+        };
+        studentMapper.createTypeMap(Student.class, StudentPreviewDTO.class)
+                .addMappings(mapper -> mapper.map(s -> s.getPerson().getId(), StudentPreviewDTO::setPersonId))
+                .setPostConverter(toDTOPreviewPostConverter);
     }
 
     public Student toEntity(StudentUpdateDTO studentUpdateDTO) {
@@ -63,7 +77,15 @@ public class StudentMapper {
         return studentMapper.map(student, StudentDTO.class);
     }
 
+    public StudentPreviewDTO toPreviewDTO(Student student) {
+        return studentMapper.map(student, StudentPreviewDTO.class);
+    }
+
     public List<StudentDTO> toDTO(List<Student> students) {
         return students.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    public List<StudentPreviewDTO> toPreviewDTO(List<Student> students) {
+        return students.stream().map(this::toPreviewDTO).collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package by.kopyshev.university.service.education;
 
 import by.kopyshev.university.domain.education.role.Student;
 import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentPreviewDTO;
 import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.education.StudentMapper;
@@ -35,18 +36,22 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO get(int id) {
-        Student student = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
-        return mapper.toDTO(student);
+        return mapper.toDTO(getById(id));
+    }
+
+    @Override
+    public StudentPreviewDTO getPreview(int id) {
+       return mapper.toPreviewDTO(getById(id));
     }
 
     @Override
     public List<StudentDTO> getAll(Integer studentGroupId) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "person.lastName", "person.firstName", "person.middleName");
-        List<Student> facultyDepartments = isNull(studentGroupId)
-                ? repository.getAll(sort).orElse(List.of())
-                : repository.getAll(studentGroupId).orElse(List.of());
-        return mapper.toDTO(facultyDepartments);
+        return mapper.toDTO(getAllByGroup(studentGroupId));
+    }
+
+    @Override
+    public List<StudentPreviewDTO> getAllPreview(Integer studentGroupId) {
+        return mapper.toPreviewDTO(getAllByGroup(studentGroupId));
     }
 
     @Override
@@ -60,5 +65,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void delete(int id) {
         checkNotFoundWithId(repository.delete(id) != 0, Student.class, id);
+    }
+
+    private Student getById(int id) {
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
+    }
+
+    private List<Student> getAllByGroup(Integer studentGroupId) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "person.lastName", "person.firstName", "person.middleName");
+        return isNull(studentGroupId)
+                ? repository.getAll(sort).orElse(List.of())
+                : repository.getAll(studentGroupId).orElse(List.of());
     }
 }
