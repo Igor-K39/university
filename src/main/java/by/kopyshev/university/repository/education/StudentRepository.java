@@ -13,4 +13,7 @@ public interface StudentRepository extends BaseRepository<Student> {
     @Query("SELECT s FROM Student s WHERE s.studentGroup.id = :groupId " +
             "ORDER BY s.person.lastName, s.person.firstName, s.person.middleName")
     Optional<List<Student>> getAll(@Param("groupId") int studentGroupId);
+
+    @Query("SELECT s FROM Student s WHERE s.person.id = :personId ")
+    Optional<Student> getByPerson(@Param("personId") int personId);
 }

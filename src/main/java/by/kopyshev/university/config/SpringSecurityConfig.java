@@ -1,6 +1,7 @@
 package by.kopyshev.university.config;
 
 import by.kopyshev.university.service.UserService;
+import by.kopyshev.university.web.controller.ProfileRestController;
 import by.kopyshev.university.web.controller.person.PersonRestController;
 import by.kopyshev.university.web.controller.education.educator.EducatorRestController;
 import by.kopyshev.university.web.controller.education.lecture.AdminLectureRestController;
@@ -59,7 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] authenticatedApi = new String[] {
                 STUDENT_GROUP_REST_URL + "**",
                 LECTURE_REST_URL + "/**",
-                PREVIEW_STUDENT_REST_URL + "/**"
+                PREVIEW_STUDENT_REST_URL + "/**",
+                ProfileRestController.PROFILE_REST_URL + "/**"
         };
 
         String[] dispatcherApi = new String[] {

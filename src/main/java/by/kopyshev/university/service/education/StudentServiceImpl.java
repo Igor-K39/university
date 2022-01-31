@@ -40,8 +40,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentDTO getByPerson(int personId) {
+        Student student = repository.getByPerson(personId).orElse(null);
+        return !isNull(student)
+                ? mapper.toDTO(student)
+                : null;
+    }
+
+    @Override
     public StudentPreviewDTO getPreview(int id) {
-       return mapper.toPreviewDTO(getById(id));
+        return mapper.toPreviewDTO(getById(id));
     }
 
     @Override

@@ -13,6 +13,8 @@ public interface StudentService {
 
     StudentDTO get(int id);
 
+    StudentDTO getByPerson(int personId);
+
     StudentPreviewDTO getPreview(int id);
 
     List<StudentDTO> getAll(Integer studentGroupId);

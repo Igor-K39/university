@@ -134,6 +134,7 @@ CREATE TABLE student
     person_id          INTEGER     NOT NULL,
     student_group_id   INTEGER,
     leader             BOOLEAN DEFAULT FALSE,
+    CONSTRAINT student_person_idx UNIQUE (person_id),
     FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
     FOREIGN KEY (student_group_id) REFERENCES student_group (id) ON DELETE SET NULL
 );
@@ -147,7 +148,7 @@ CREATE TABLE lecture
     lecture_hall_id  INTEGER,
     educator_id      INTEGER,
     student_group_id INTEGER     NOT NULL,
-    date             DATE        NOT NULL,
+    date             DATE    DEFAULT NOW(),
     FOREIGN KEY (discipline_id) REFERENCES discipline ON DELETE CASCADE,
     FOREIGN KEY (lecture_hall_id) REFERENCES lecture_hall ON DELETE SET NULL,
     FOREIGN KEY (educator_id) REFERENCES educator ON DELETE SET NULL,
@@ -597,12 +598,30 @@ VALUES (100124, 'LECTURE_TIME', 100002, 100116, 100142, '2022-01-25'),    -- 12
        (100138, 'EXAMINE_TIME', 100008, 100122, 100143, '2022-01-27'),
        (100139, 'CONSULTING_TIME', 100009, 100123, 100142, '2022-01-27');
 
+INSERT INTO lecture(discipline_id, lecture_type, lecture_hall_id, educator_id, student_group_id)
+VALUES (100124, 'LECTURE_TIME', 100002, 100116, 100142), -- 12
+       (100125, 'TEST_TIME', 100003, 100117, 100143),
+       (100126, 'CONSULTING_TIME', 100004, 100116, 100144),
+       (100127, 'EXAMINE_TIME', 100005, 100117, 100145),
+       (100128, 'LECTURE_TIME', 100006, 100118, 100142), -- 13
+       (100129, 'TEST_TIME', 100007, 100119, 100143),
+       (100130, 'CONSULTING_TIME', 100008, 100118, 100144),
+       (100131, 'EXAMINE_TIME', 100009, 100119, 100145),
+       (100132, 'LECTURE_TIME', 100002, 100120, 100142), -- 14
+       (100133, 'TEST_TIME', 100003, 100121, 100143),
+       (100134, 'CONSULTING_TIME', 100004, 100120, 100144),
+       (100135, 'EXAMINE_TIME', 100005, 100121, 100145),
+       (100136, 'LECTURE_TIME', 100006, 100122, 100142), -- 15
+       (100137, 'TEST_TIME', 100007, 100123, 100143),
+       (100138, 'CONSULTING_TIME', 100008, 100122, 100144),
+       (100139, 'EXAMINE_TIME', 100009, 100123, 100145);
+
 INSERT INTO users(id, login, password, enabled)
-VALUES (100010, 'student', '$2a$10$Sz/ioVIcYZExKdrK/jWI.OlF2BY2Xqo4Ekr482IGciLPgZCZuxY0.', TRUE),
+VALUES (100018, 'student', '$2a$10$Sz/ioVIcYZExKdrK/jWI.OlF2BY2Xqo4Ekr482IGciLPgZCZuxY0.', TRUE),
        (100011, 'dispatcher', '$2a$10$.w5FgtGrRZ1je9eQpgCe8OPNTNe1cL1X//u.rwQ5YWQOaCcHV3RWi', TRUE),
        (100013, 'admin', '$2a$10$AFacJmhrZtuei1S/UJNwmOBASNbeVpNLR/taEzhSqD..x/LDYwllq', TRUE);
 
 INSERT INTO user_roles(user_id, role)
-VALUES (100010, 'STUDENT'),
+VALUES (100018, 'STUDENT'),
        (100011, 'DISPATCHER'),
        (100013, 'ADMIN')
