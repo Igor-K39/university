@@ -1,8 +1,8 @@
-package by.kopyshev.university.web.controller;
+package by.kopyshev.university.web.controller.user;
 
-import by.kopyshev.university.domain.User;
+import by.kopyshev.university.dto.UserDTO;
+import by.kopyshev.university.dto.UserUpdateDTO;
 import by.kopyshev.university.service.UserService;
-import by.kopyshev.university.util.ValidationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +15,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = AdminRestController.ADMIN_USER_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestController {
+public class AdminRestController extends AbstractUserRestController {
     public static final String ADMIN_USER_REST_URL = "/api/admin/users/";
 
-    private final UserService service;
-
     public AdminRestController(UserService service) {
-        this.service = service;
+        super(service);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody @Valid User user) {
-        User created = service.create(user);
+    public ResponseEntity<UserDTO> createWithLocation(@RequestBody @Valid UserUpdateDTO userUpdateDTO) {
+        UserDTO created = super.create(userUpdateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(ADMIN_USER_REST_URL + "{id}")
                 .buildAndExpand(created.id()).toUri();
@@ -35,25 +33,24 @@ public class AdminRestController {
     }
 
     @GetMapping("{id}")
-    public User get(@PathVariable("id") Integer id) {
-        return service.get(id);
+    public UserDTO get(@PathVariable("id") Integer id) {
+        return super.get(id);
     }
 
     @GetMapping()
-    public List<User> getAll() {
-        return service.getAll();
+    public List<UserDTO> getAll() {
+        return super.getAll();
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid User user, @PathVariable int id) {
-        ValidationUtil.assureIdConsistent(user, id);
-        service.update(user);
+    public void update(@RequestBody @Valid UserUpdateDTO userUpdateDTO, @PathVariable int id) {
+        super.update(userUpdateDTO, id);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        service.delete(id);
+        super.delete(id);
     }
 }

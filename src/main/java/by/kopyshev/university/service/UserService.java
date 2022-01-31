@@ -2,8 +2,12 @@ package by.kopyshev.university.service;
 
 import by.kopyshev.university.domain.User;
 import by.kopyshev.university.domain.education.role.Student;
+import by.kopyshev.university.dto.UserDTO;
+import by.kopyshev.university.dto.UserUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
+import by.kopyshev.university.mapper.UserMapper;
 import by.kopyshev.university.repository.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,32 +24,39 @@ import static by.kopyshev.university.util.ValidationUtil.checkNotFoundWithId;
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
-
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.repository = userRepository;
+        this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User create(User user) {
-        checkNew(user);
+    public UserDTO create(UserUpdateDTO userUpdateDTO) {
+        checkNew(userUpdateDTO);
+        User user = userMapper.toEntity(userUpdateDTO);
         encodePassword(user);
-        return repository.save(user);
+        System.out.println(user);
+        return userMapper.toDTO(repository.save(user));
     }
 
-    public User get(int id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
+    public UserDTO get(int id) {
+        User user = repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
+        return userMapper.toDTO(user);
     }
 
-    public List<User> getAll() {
-        return repository.findAll();
+    public List<UserDTO> getAll() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "registered");
+        List<User> users = repository.getAll(sort).orElse(List.of());
+        return userMapper.toDTO(users);
     }
 
     @Transactional
-    public void update(User user) {
-        int id = user.id();
+    public void update(UserUpdateDTO userUpdateDTO) {
+        int id = userUpdateDTO.id();
         repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
+        User user = userMapper.toEntity(userUpdateDTO);
         encodePassword(user);
         repository.save(user);
     }
@@ -56,7 +67,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.getByUsername(username).orElseThrow(() -> new NotFoundException(User.class, "username = " + username));
+        User user = repository.getByUsername(username)
+                .orElseThrow(() -> new NotFoundException(User.class, "username = " + username));
+        return userMapper.toDTO(user);
     }
 
     private void encodePassword(User user) {

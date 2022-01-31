@@ -157,11 +157,14 @@ CREATE TABLE lecture
 
 CREATE TABLE users
 (
-    id         INTEGER NOT NULL PRIMARY KEY,
+    id         INTEGER   DEFAULT NEXTVAL('global_sequence') PRIMARY KEY,
     login      VARCHAR(100),
     password   VARCHAR(100),
+    person_id  INTEGER NOT NULL,
     enabled    BOOLEAN   DEFAULT TRUE,
-    registered TIMESTAMP DEFAULT NOW()
+    registered TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT person_id_idx UNIQUE (person_id),
+    FOREIGN KEY (person_id) REFERENCES person ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX user_login_idx ON users (login);
 
@@ -616,12 +619,12 @@ VALUES (100124, 'LECTURE_TIME', 100002, 100116, 100142), -- 12
        (100138, 'CONSULTING_TIME', 100008, 100122, 100144),
        (100139, 'EXAMINE_TIME', 100009, 100123, 100145);
 
-INSERT INTO users(id, login, password, enabled)
-VALUES (100018, 'student', '$2a$10$Sz/ioVIcYZExKdrK/jWI.OlF2BY2Xqo4Ekr482IGciLPgZCZuxY0.', TRUE),
-       (100011, 'dispatcher', '$2a$10$.w5FgtGrRZ1je9eQpgCe8OPNTNe1cL1X//u.rwQ5YWQOaCcHV3RWi', TRUE),
-       (100013, 'admin', '$2a$10$AFacJmhrZtuei1S/UJNwmOBASNbeVpNLR/taEzhSqD..x/LDYwllq', TRUE);
+INSERT INTO users(login, password, person_id, enabled)
+VALUES ('student', '$2a$10$Sz/ioVIcYZExKdrK/jWI.OlF2BY2Xqo4Ekr482IGciLPgZCZuxY0.', 100018, TRUE),
+       ('dispatcher', '$2a$10$.w5FgtGrRZ1je9eQpgCe8OPNTNe1cL1X//u.rwQ5YWQOaCcHV3RWi', 100010, TRUE),
+       ('admin', '$2a$10$AFacJmhrZtuei1S/UJNwmOBASNbeVpNLR/taEzhSqD..x/LDYwllq', 100011, TRUE);
 
 INSERT INTO user_roles(user_id, role)
-VALUES (100018, 'STUDENT'),
-       (100011, 'DISPATCHER'),
-       (100013, 'ADMIN')
+VALUES (100302, 'STUDENT'),
+       (100303, 'DISPATCHER'),
+       (100304, 'ADMIN')

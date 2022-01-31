@@ -1,7 +1,7 @@
 package by.kopyshev.university.config;
 
 import by.kopyshev.university.service.UserService;
-import by.kopyshev.university.web.controller.ProfileRestController;
+import by.kopyshev.university.web.controller.user.ProfileRestController;
 import by.kopyshev.university.web.controller.person.PersonRestController;
 import by.kopyshev.university.web.controller.education.educator.EducatorRestController;
 import by.kopyshev.university.web.controller.education.lecture.AdminLectureRestController;

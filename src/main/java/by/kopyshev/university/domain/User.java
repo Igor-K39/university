@@ -3,21 +3,22 @@ package by.kopyshev.university.domain;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@DiscriminatorColumn()
 @Access(AccessType.FIELD)
-public class User extends Person implements UserDetails {
+public class User extends BaseEntity {
+
+    @NotNull
+    @OneToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @NotNull
     @Size(min = 5, max = 50)
@@ -44,21 +45,14 @@ public class User extends Person implements UserDetails {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles = Set.of();
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+    public Person getPerson() {
+        return person;
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
@@ -67,7 +61,14 @@ public class User extends Person implements UserDetails {
         this.username = username;
     }
 
-    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -89,21 +90,19 @@ public class User extends Person implements UserDetails {
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+        this.roles = Set.copyOf(roles);
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", person=" + person +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", registered=" + registered +
+                ", roles=" + roles +
+                '}';
     }
 }

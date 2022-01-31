@@ -1,4 +1,4 @@
-package by.kopyshev.university.web.controller;
+package by.kopyshev.university.web.controller.user;
 
 import by.kopyshev.university.domain.User;
 import by.kopyshev.university.dto.education.lecture.LectureDTO;
@@ -39,7 +39,7 @@ public class ProfileRestController {
     }
 
     private void putLecturesIfExist(User user, Map<String, Object> response, LocalDate start, LocalDate end) {
-        StudentDTO student = studentService.getByPerson(user.getId());
+        StudentDTO student = studentService.getByPerson(user.getPerson().getId());
         List<LectureDTO> lectures = lectureService.getAll(student.getStudentGroupId(), start, end);
         if (!lectures.isEmpty()) {
             response.put("lectures", lectures);
