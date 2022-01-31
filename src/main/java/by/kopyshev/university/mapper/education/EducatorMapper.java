@@ -4,6 +4,7 @@ import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.domain.education.role.Educator;
+import by.kopyshev.university.dto.PersonDTO;
 import by.kopyshev.university.dto.education.educator.EducatorDTO;
 import by.kopyshev.university.dto.education.educator.EducatorPreviewDTO;
 import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
@@ -83,6 +84,19 @@ public class EducatorMapper {
                         EducatorPreviewDTO::setFacultyDepartmentId))
                 .addMappings(mapper -> mapper.map(s -> s.getPerson().getId(), EducatorPreviewDTO::setPersonId))
                 .setPostConverter(toPreviewDTOPostConverter);
+
+        educatorMapper.createTypeMap(EducatorDTO.class, EducatorPreviewDTO.class)
+                .addMappings(mapper -> mapper.map(EducatorDTO::getLectureHallId, EducatorPreviewDTO::setLectureHallId))
+                .addMappings(mapper -> mapper.map(EducatorDTO::getFacultyDepartmentId, EducatorPreviewDTO::setFacultyDepartmentId))
+                .addMappings(mapper -> mapper.map(s -> s.getPersonDTO().getId(), EducatorPreviewDTO::setPersonId))
+                .setPostConverter(ctx -> {
+                    PersonDTO person = ctx.getSource().getPersonDTO();
+                    String name = person.getLastName() + " " +
+                            person.getFirstName().substring(0, 0) + "." +
+                            person.getMiddleName().substring(0, 0) + ".";
+                    ctx.getDestination().setName(name);
+                    return ctx.getDestination();
+                });
     }
 
     public Educator toEntity(EducatorUpdateDTO educatorUpdateDTO) {
@@ -97,11 +111,19 @@ public class EducatorMapper {
         return educatorMapper.map(educator, EducatorPreviewDTO.class);
     }
 
+    public EducatorPreviewDTO toPreviewDTO(EducatorDTO educatorDTO) {
+        return educatorMapper.map(educatorDTO, EducatorPreviewDTO.class);
+    }
+
     public List<EducatorDTO> toDTO(List<Educator> educators) {
         return educators.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public List<EducatorPreviewDTO> toPreviewDTO(List<Educator> educators) {
         return educators.stream().map(this::toPreviewDTO).collect(Collectors.toList());
+    }
+
+    public List<EducatorPreviewDTO> dtoToPreviewDTO(List<EducatorDTO> educatorDTOs) {
+        return educatorDTOs.stream().map(this::toPreviewDTO).collect(Collectors.toList());
     }
 }
