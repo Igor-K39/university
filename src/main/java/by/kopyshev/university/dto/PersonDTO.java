@@ -61,6 +61,11 @@ public class PersonDTO extends BaseDTO {
         this.email = email;
     }
 
+    public PersonDTO(PersonDTO personDTO) {
+        this(personDTO.id, personDTO.firstName, personDTO.lastName, personDTO.middleName, personDTO.birthDate,
+                personDTO.city, personDTO.address, personDTO.passport, personDTO.mobilePhone, personDTO.email);
+    }
+
     public String getFirstName() {
         return firstName;
     }
