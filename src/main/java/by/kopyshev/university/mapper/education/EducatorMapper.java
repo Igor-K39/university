@@ -8,6 +8,7 @@ import by.kopyshev.university.dto.PersonDTO;
 import by.kopyshev.university.dto.education.educator.EducatorDTO;
 import by.kopyshev.university.dto.education.educator.EducatorPreviewDTO;
 import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
 import by.kopyshev.university.repository.building.LectureHallRepository;
@@ -40,9 +41,12 @@ public class EducatorMapper {
     public void setup() {
         Converter<EducatorUpdateDTO, Educator> toEntityPostConverter = ctx -> {
             EducatorUpdateDTO source = ctx.getSource();
-            Person person = personRepository.getById(source.getPersonId());
-            LectureHall lectureHall = lectureHallRepository.getById(source.getLectureHallId());
-            FacultyDepartment facultyDepartment = facultyDepartmentRepository.getById(source.getFacultyDepartmentId());
+            Person person = personRepository.findById(source.getPersonId())
+                    .orElseThrow(() -> new NotFoundException(Person.class, "id = " + source.getPersonId()));
+            LectureHall lectureHall = lectureHallRepository.findById(source.getLectureHallId())
+                    .orElseThrow(() -> new NotFoundException(LectureHall.class, "id = " + source.getLectureHallId()));
+            FacultyDepartment facultyDepartment = facultyDepartmentRepository.findById(source.getFacultyDepartmentId())
+                    .orElseThrow(() -> new NotFoundException(FacultyDepartment.class, "id = " + source.getFacultyDepartmentId()));
 
             Educator destination = ctx.getDestination();
             destination.setPerson(person);

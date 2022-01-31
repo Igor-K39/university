@@ -3,6 +3,7 @@ package by.kopyshev.university.mapper.building;
 import by.kopyshev.university.domain.building.Campus;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.dto.building.LectureHallDTO;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.repository.building.CampusRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -33,7 +34,8 @@ public class LectureHallMapper {
                 .setPostConverter(toDTOPostConverter);
 
         Converter<LectureHallDTO, LectureHall> toUpdateDTOPostConverter = ctx -> {
-            Campus campus = campusRepository.getById(ctx.getSource().getCampusId());
+            Campus campus = campusRepository.findById(ctx.getSource().getCampusId())
+                    .orElseThrow(() -> new NotFoundException(Campus.class, "id = " + ctx.getSource().getCampusId()));
             LectureHall lectureHall = ctx.getDestination();
             lectureHall.setCampus(campus);
             return lectureHall;

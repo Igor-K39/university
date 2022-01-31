@@ -229,7 +229,7 @@ VALUES ('Основы алгоритмизации и программирова
 
 INSERT INTO speciality(name, code, short_name, faculty_id)
 VALUES ('Программное обеспечение информационных технологий', '1-40 01 01', 'ПОИТ', 100006),
-       ('Вычислительные машины, системы и сети', '1-40 02 01', 'ПОИТ', 100007);
+       ('Вычислительные машины, системы и сети', '1-40 02 01', 'ВМСиС', 100007);
 
 
 INSERT INTO student_group(name, speciality_id, study_type, current_education_year, admission, curator_id)

@@ -57,7 +57,7 @@ public class LectureHallConstants {
             = new LectureHallDTO(HALL_4_ID, HALL_4_NUMBER, CAMPUS_2_ID, HALL_4_TYPE, HALL_4_CAPACITY, HALL_4_DESCRIPTION);
 
     public static LectureHallDTO getNew(Integer campusId) {
-        return new LectureHallDTO(null, HALL_1_NUMBER, campusId,
+        return new LectureHallDTO(null, "new num", campusId,
                 LectureHallType.LECTURE, 100, "New Description");
     }
 

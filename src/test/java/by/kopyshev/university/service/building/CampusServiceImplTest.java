@@ -1,10 +1,9 @@
-package by.kopyshev.university.service;
+package by.kopyshev.university.service.building;
 
 import by.kopyshev.university.AbstractServiceTest;
 import by.kopyshev.university.dto.building.CampusDTO;
 import by.kopyshev.university.dto.building.CampusWithHallsDTO;
 import by.kopyshev.university.exception.NotFoundException;
-import by.kopyshev.university.service.building.CampusService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
