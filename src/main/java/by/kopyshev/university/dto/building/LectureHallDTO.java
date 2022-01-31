@@ -39,6 +39,11 @@ public class LectureHallDTO extends BaseDTO {
         this.description = description;
     }
 
+    public LectureHallDTO(LectureHallDTO lectureHallDTO) {
+        this(lectureHallDTO.id, lectureHallDTO.number, lectureHallDTO.campusId, lectureHallDTO.type,
+                lectureHallDTO.capacity, lectureHallDTO.description);
+    }
+
     public String getNumber() {
         return number;
     }

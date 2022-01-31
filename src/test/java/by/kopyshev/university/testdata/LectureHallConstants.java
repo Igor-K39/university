@@ -1,5 +1,6 @@
 package by.kopyshev.university.testdata;
 
+import by.kopyshev.university.MatcherFactory;
 import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.domain.building.LectureHallType;
 import by.kopyshev.university.dto.building.LectureHallDTO;
@@ -7,6 +8,9 @@ import by.kopyshev.university.dto.building.LectureHallDTO;
 import static by.kopyshev.university.testdata.CampusConstants.*;
 
 public class LectureHallConstants {
+    public static final MatcherFactory.Matcher<LectureHallDTO> LECTURE_HALL_DTO_MATCHER
+            = MatcherFactory.usingIgnoreFieldComparator(LectureHallDTO.class);
+
     public static final int HALL_1_ID = 100_002;
     public static final int HALL_2_ID = 100_003;
     public static final int HALL_3_ID = 100_004;
@@ -51,4 +55,15 @@ public class LectureHallConstants {
 
     public static final LectureHallDTO hallDTO4
             = new LectureHallDTO(HALL_4_ID, HALL_4_NUMBER, CAMPUS_2_ID, HALL_4_TYPE, HALL_4_CAPACITY, HALL_4_DESCRIPTION);
+
+    public static LectureHallDTO getNew(Integer campusId) {
+        return new LectureHallDTO(null, HALL_1_NUMBER, campusId,
+                LectureHallType.LECTURE, 100, "New Description");
+    }
+
+    public static LectureHallDTO getUpdated(Integer id) {
+        LectureHallDTO updated = new LectureHallDTO(hallDTO1);
+        updated.setId(id);
+        return updated;
+    }
 }
