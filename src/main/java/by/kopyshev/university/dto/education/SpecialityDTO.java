@@ -28,6 +28,10 @@ public class SpecialityDTO extends NamedDTO {
         this.facultyId = facultyId;
     }
 
+    public SpecialityDTO(SpecialityDTO specialityDTO) {
+        this(specialityDTO.id, specialityDTO.name, specialityDTO.code, specialityDTO.shortName, specialityDTO.facultyId);
+    }
+
     public String getCode() {
         return code;
     }
