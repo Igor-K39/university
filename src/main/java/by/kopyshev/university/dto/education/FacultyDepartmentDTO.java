@@ -40,6 +40,11 @@ public class FacultyDepartmentDTO extends NamedDTO {
         this.facultyId = facultyId;
     }
 
+    public FacultyDepartmentDTO(FacultyDepartmentDTO departmentDTO) {
+        this(departmentDTO.id, departmentDTO.name, departmentDTO.address, departmentDTO.email, departmentDTO.phoneNumber,
+                departmentDTO.description, departmentDTO.facultyId);
+    }
+
     public String getAddress() {
         return address;
     }

@@ -35,6 +35,11 @@ public class FacultyDTO extends NamedDTO {
         this.description = description;
     }
 
+    public FacultyDTO(FacultyDTO facultyDTO) {
+        this(facultyDTO.id, facultyDTO.name, facultyDTO.deanAddress, facultyDTO.deanEmail, facultyDTO.deanPhoneNumber,
+                facultyDTO.description);
+    }
+
     public String getDeanAddress() {
         return deanAddress;
     }

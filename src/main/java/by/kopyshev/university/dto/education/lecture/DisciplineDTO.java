@@ -23,6 +23,10 @@ public class DisciplineDTO extends NamedDTO {
         this.facultyDepartmentId = facultyDepartmentId;
     }
 
+    public DisciplineDTO(DisciplineDTO disciplineDTO) {
+        this(disciplineDTO.id, disciplineDTO.name, disciplineDTO.shortName, disciplineDTO.facultyDepartmentId);
+    }
+
     public String getShortName() {
         return shortName;
     }
