@@ -36,11 +36,13 @@ public class Campus extends NamedEntity {
     public Campus() {
     }
 
-    public Campus(Integer id, String name, String number, String address, String description) {
+    public Campus(Integer id, String name, String number, String address, String description,
+                  List<LectureHall> lectureHalls) {
         super(id, name);
         this.number = number;
         this.address = address;
         this.description = description;
+        this.lectureHalls = List.copyOf(lectureHalls);
     }
 
     public String getNumber() {

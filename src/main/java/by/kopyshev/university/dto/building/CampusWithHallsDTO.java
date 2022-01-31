@@ -7,6 +7,15 @@ public class CampusWithHallsDTO extends CampusDTO {
 
     private List<LectureHallDTO> lectureHallsDTO;
 
+    public CampusWithHallsDTO() {
+    }
+
+    public CampusWithHallsDTO(Integer id, String name, String number, String address, String description,
+                              List<LectureHallDTO> lectureHallsDTO) {
+        super(id, name, number, address, description);
+        this.lectureHallsDTO = lectureHallsDTO;
+    }
+
     public List<LectureHallDTO> getLectureHallsDTO() {
         return List.copyOf(lectureHallsDTO);
     }

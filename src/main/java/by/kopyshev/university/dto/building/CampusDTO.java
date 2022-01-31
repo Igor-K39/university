@@ -22,6 +22,17 @@ public class CampusDTO extends NamedEntity {
     public CampusDTO() {
     }
 
+    public CampusDTO(Integer id, String name, String number, String address, String description) {
+        super(id, name);
+        this.number = number;
+        this.address = address;
+        this.description = description;
+    }
+
+    public CampusDTO(CampusDTO campusDTO) {
+        this(campusDTO.id, campusDTO.name, campusDTO.number, campusDTO.address, campusDTO.description);
+    }
+
     public String getNumber() {
         return number;
     }
