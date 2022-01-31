@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "person")
 @Access(AccessType.FIELD)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person extends BaseEntity {
 
     @NotBlank
