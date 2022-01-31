@@ -7,6 +7,7 @@ import by.kopyshev.university.domain.education.role.Educator;
 import by.kopyshev.university.dto.education.educator.EducatorDTO;
 import by.kopyshev.university.dto.education.educator.EducatorPreviewDTO;
 import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
+import by.kopyshev.university.mapper.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
 import by.kopyshev.university.repository.building.LectureHallRepository;
 import by.kopyshev.university.repository.education.FacultyDepartmentRepository;
@@ -21,12 +22,14 @@ import java.util.stream.Collectors;
 @Component
 public class EducatorMapper {
     private final ModelMapper educatorMapper = new ModelMapper();
+    private final PersonMapper personMapper;
     private final PersonRepository personRepository;
     private final LectureHallRepository lectureHallRepository;
     private final FacultyDepartmentRepository facultyDepartmentRepository;
 
-    public EducatorMapper(PersonRepository personRepository, LectureHallRepository lectureHallRepository,
+    public EducatorMapper(PersonMapper personMapper, PersonRepository personRepository, LectureHallRepository lectureHallRepository,
                           FacultyDepartmentRepository facultyDepartmentRepository) {
+        this.personMapper = personMapper;
         this.personRepository = personRepository;
         this.lectureHallRepository = lectureHallRepository;
         this.facultyDepartmentRepository = facultyDepartmentRepository;
@@ -58,6 +61,7 @@ public class EducatorMapper {
             EducatorDTO destination = ctx.getDestination();
             destination.setLectureHallId(source.getLectureHall().getId());
             destination.setFacultyDepartmentId(source.getFacultyDepartment().getId());
+            destination.setPersonDTO(personMapper.toDTO(source.getPerson()));
             return destination;
         };
         educatorMapper.createTypeMap(Educator.class, EducatorDTO.class)

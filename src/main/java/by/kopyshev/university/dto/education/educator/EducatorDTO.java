@@ -1,7 +1,7 @@
 package by.kopyshev.university.dto.education.educator;
 
-import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.dto.BaseDTO;
+import by.kopyshev.university.dto.PersonDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import java.util.Objects;
 public class EducatorDTO extends BaseDTO {
 
     @NotNull
-    private Person person;
+    private PersonDTO personDTO;
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -34,10 +34,10 @@ public class EducatorDTO extends BaseDTO {
     public EducatorDTO() {
     }
 
-    public EducatorDTO(Integer id, Person person, String position, Integer lectureHallId,
+    public EducatorDTO(Integer id, PersonDTO personDTO, String position, Integer lectureHallId,
                        Integer facultyDepartmentId, String academicDegree, String phoneNumber) {
         super(id);
-        this.person = person;
+        this.personDTO = personDTO;
         this.position = position;
         this.lectureHallId = lectureHallId;
         this.facultyDepartmentId = facultyDepartmentId;
@@ -45,12 +45,17 @@ public class EducatorDTO extends BaseDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public Person getPerson() {
-        return person;
+    public EducatorDTO(EducatorDTO educatorDTO) {
+        this(educatorDTO.id, educatorDTO.personDTO, educatorDTO.position, educatorDTO.lectureHallId,
+                educatorDTO.facultyDepartmentId, educatorDTO.academicDegree, educatorDTO.phoneNumber);
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public PersonDTO getPersonDTO() {
+        return personDTO;
+    }
+
+    public void setPersonDTO(PersonDTO personDTO) {
+        this.personDTO = personDTO;
     }
 
     public String getPosition() {
@@ -99,7 +104,7 @@ public class EducatorDTO extends BaseDTO {
         if (!(o instanceof EducatorDTO)) return false;
         if (!super.equals(o)) return false;
         EducatorDTO that = (EducatorDTO) o;
-        return Objects.equals(getPerson(), that.getPerson())
+        return Objects.equals(getPersonDTO(), that.getPersonDTO())
                 && Objects.equals(getPosition(), that.getPosition())
                 && Objects.equals(getLectureHallId(), that.getLectureHallId())
                 && Objects.equals(getFacultyDepartmentId(), that.getFacultyDepartmentId())
@@ -109,7 +114,20 @@ public class EducatorDTO extends BaseDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getPerson(), getPosition(),
+        return Objects.hash(super.hashCode(), getPersonDTO(), getPosition(),
                 getLectureHallId(), getFacultyDepartmentId(), getAcademicDegree(), getPhoneNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "EducatorDTO{" +
+                "id=" + id +
+                ", personDTO=" + personDTO +
+                ", position='" + position + '\'' +
+                ", lectureHallId=" + lectureHallId +
+                ", facultyDepartmentId=" + facultyDepartmentId +
+                ", academicDegree='" + academicDegree + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
