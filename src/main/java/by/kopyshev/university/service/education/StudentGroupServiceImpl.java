@@ -49,7 +49,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Override
     public List<StudentGroupDTO> getAll() {
-        List<StudentGroup> groups = repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of());
+        List<StudentGroup> groups = repository.getAll().orElse(List.of());
         return mapper.toDTO(groups);
     }
 

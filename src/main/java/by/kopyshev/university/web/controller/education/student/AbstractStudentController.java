@@ -36,12 +36,12 @@ public class AbstractStudentController {
     }
 
     public List<StudentDTO> getAll(Integer groupId) {
-        log.info("Getting all Students of faculty department {}", groupId);
+        log.info("Getting all Students of student group {}", groupId);
         return service.getAll(groupId);
     }
 
     public List<StudentPreviewDTO> getAllPreview(Integer groupId) {
-        log.info("Getting all StudentPreview of faculty department {}", groupId);
+        log.info("Getting all StudentPreview of student group {}", groupId);
         return service.getAllPreview(groupId);
     }
 

@@ -50,7 +50,7 @@ public class FacultyDepartmentServiceImpl implements FacultyDepartmentService {
     @Override
     public List<FacultyDepartmentDTO> getAll(Integer facultyId) {
         List<FacultyDepartment> facultyDepartments = isNull(facultyId)
-                ? repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of())
+                ? repository.getAll().orElse(List.of())
                 : repository.getAll(facultyId).orElse(List.of());
         return mapper.toDTO(facultyDepartments);
     }

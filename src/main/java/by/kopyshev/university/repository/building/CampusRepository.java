@@ -14,11 +14,14 @@ public interface CampusRepository extends BaseRepository<Campus> {
 
     Optional<Campus> getByNumber(@Param("number") String number);
 
-    @EntityGraph(value = "with-lecture-halls")
+    @EntityGraph(value = "campus-with-lecture-halls")
     @Query("SELECT c FROM Campus c WHERE c.id = :id")
     Optional<Campus> getWithHalls(@Param("id") int id);
 
-    @EntityGraph(value = "with-lecture-halls")
+    @EntityGraph(value = "campus-with-lecture-halls")
     @Query("SELECT c FROM Campus c ORDER BY c.number")
     Optional<List<Campus>> getAllWithHalls();
+
+    @Query("SELECT c FROM Campus c ORDER BY c.number")
+    Optional<List<Campus>> getAll();
 }

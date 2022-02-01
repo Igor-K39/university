@@ -12,11 +12,11 @@ import java.util.Optional;
 
 public interface LectureRepository extends BaseRepository<Lecture> {
 
-    @EntityGraph(value = "all-attributes")
+    @EntityGraph(value = "lecture-deep-all")
     @Query("SELECT l FROM Lecture l WHERE l.date >= :start AND l.date <= :end")
     Optional<List<Lecture>> getAllByDate(@Param("start") LocalDate start, @Param("end") LocalDate end);
 
-    @EntityGraph(value = "all-attributes")
+    @EntityGraph(value = "lecture-deep-all")
     @Query("SELECT l FROM Lecture l WHERE l.studentGroup.id = :groupId AND l.date >= :start AND l.date <= :end")
     Optional<List<Lecture>> getAllByGroupAndDate(@Param("groupId") int groupId,
                                                  @Param("start") LocalDate start, @Param("end") LocalDate end);

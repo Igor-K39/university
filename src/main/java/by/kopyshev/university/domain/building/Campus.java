@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @NamedEntityGraph(
-        name = "with-lecture-halls",
+        name = "campus-with-lecture-halls",
         attributeNodes = @NamedAttributeNode(value = "lectureHalls")
 )
 @Entity

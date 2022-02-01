@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@NamedEntityGraph(name = "all-attributes",
+@NamedEntityGraph(name = "lecture-deep-all",
         attributeNodes = {
             @NamedAttributeNode(value = "discipline", subgraph = "lecture.discipline"),
                 @NamedAttributeNode(value = "lectureHall", subgraph = "lecture.lectureHall"),

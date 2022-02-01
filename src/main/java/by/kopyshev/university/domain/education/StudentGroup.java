@@ -12,12 +12,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @NamedEntityGraph(
-        name = "with-students",
+        name = "student-group-deep-all",
         attributeNodes = {
                 @NamedAttributeNode(value = "students", subgraph = "students.person"),
                 @NamedAttributeNode(value = "curator", subgraph = "students.curator"),
                 @NamedAttributeNode(value = "speciality")
-
         },
         subgraphs = {
                 @NamedSubgraph(name = "students.person", attributeNodes = {

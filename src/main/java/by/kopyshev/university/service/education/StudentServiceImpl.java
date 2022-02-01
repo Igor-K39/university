@@ -82,7 +82,7 @@ public class StudentServiceImpl implements StudentService {
     private List<Student> getAllByGroup(Integer studentGroupId) {
         Sort sort = Sort.by(Sort.Direction.ASC, "person.lastName", "person.firstName", "person.middleName");
         return isNull(studentGroupId)
-                ? repository.getAll(sort).orElse(List.of())
+                ? repository.getAll().orElse(List.of())
                 : repository.getAll(studentGroupId).orElse(List.of());
     }
 }

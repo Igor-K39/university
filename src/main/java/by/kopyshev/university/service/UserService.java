@@ -7,7 +7,6 @@ import by.kopyshev.university.dto.UserUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.UserMapper;
 import by.kopyshev.university.repository.UserRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -48,8 +47,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<UserDTO> getAll() {
-        Sort sort = Sort.by(Sort.Direction.ASC, "registered");
-        List<User> users = repository.getAll(sort).orElse(List.of());
+        List<User> users = repository.getAll().orElse(List.of());
         return userMapper.toDTO(users);
     }
 

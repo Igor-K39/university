@@ -47,7 +47,7 @@ public class LectureHallServiceImpl implements LectureHallService {
 
     @Override
     public List<LectureHallDTO> getAll() {
-        List<LectureHall> lectureHalls = repository.getAll(Sort.by(Sort.Direction.ASC, "number")).orElse(List.of());
+        List<LectureHall> lectureHalls = repository.getAll().orElse(List.of());
         return mapper.toDTO(lectureHalls);
     }
 

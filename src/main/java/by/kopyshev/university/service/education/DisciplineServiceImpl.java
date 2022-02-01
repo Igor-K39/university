@@ -5,7 +5,6 @@ import by.kopyshev.university.dto.education.lecture.DisciplineDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.education.DisciplineMapper;
 import by.kopyshev.university.repository.education.DisciplineRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +41,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Override
     public List<DisciplineDTO> getAll(Integer departmentId) {
         List<Discipline> facultyDepartments = isNull(departmentId)
-                ? repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of())
+                ? repository.getAll().orElse(List.of())
                 : repository.getAll(departmentId).orElse(List.of());
         return mapper.toDTO(facultyDepartments);
     }

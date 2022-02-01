@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NamedEntityGraph(name = "lecture-hall-with-campus", attributeNodes = {
+        @NamedAttributeNode("campus")
+})
 @Entity
 @Table(name = "lecture_hall")
 public class LectureHall extends BaseEntity {

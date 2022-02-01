@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@NamedEntityGraph(name = "discipline-with-department", attributeNodes = {
+        @NamedAttributeNode(value = "facultyDepartment")
+})
 @Entity
 @Table(name = "discipline")
 @Access(AccessType.FIELD)

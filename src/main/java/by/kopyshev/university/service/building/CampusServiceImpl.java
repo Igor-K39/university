@@ -55,7 +55,7 @@ public class CampusServiceImpl implements CampusService {
 
     @Override
     public List<CampusDTO> getAll() {
-        List<Campus> campuses = repository.getAll(BY_NUMBER).orElse(List.of());
+        List<Campus> campuses = repository.getAll().orElse(List.of());
         return mapper.toDTO(campuses);
     }
 

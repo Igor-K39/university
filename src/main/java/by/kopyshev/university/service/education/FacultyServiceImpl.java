@@ -6,7 +6,6 @@ import by.kopyshev.university.dto.education.FacultyWithDepartmentsDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.education.FacultyMapper;
 import by.kopyshev.university.repository.education.FacultyRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +47,7 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public List<FacultyDTO> getAll() {
-        List<Faculty> faculties = repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of());
+        List<Faculty> faculties = repository.getAll().orElse(List.of());
         return mapper.toDTO(faculties);
     }
 

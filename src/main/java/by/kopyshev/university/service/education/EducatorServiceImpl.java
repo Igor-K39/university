@@ -7,7 +7,6 @@ import by.kopyshev.university.dto.education.educator.EducatorUpdateDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.education.EducatorMapper;
 import by.kopyshev.university.repository.education.EducatorRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,9 +71,8 @@ public class EducatorServiceImpl implements EducatorService {
     }
 
     private List<Educator> getAllByDepartment(Integer facultyDepartmentId) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "person.lastName", "person.firstName", "person.middleName");
         return isNull(facultyDepartmentId)
-                ? repository.getAll(sort).orElse(List.of())
+                ? repository.getAll().orElse(List.of())
                 : repository.getAll(facultyDepartmentId).orElse(List.of());
     }
 }

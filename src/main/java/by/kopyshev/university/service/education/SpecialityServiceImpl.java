@@ -40,7 +40,7 @@ public class SpecialityServiceImpl implements SpecialityService {
 
     @Override
     public List<SpecialityDTO> getAll() {
-        List<Speciality> faculties = repository.getAll(Sort.by(Sort.Direction.ASC, "name")).orElse(List.of());
+        List<Speciality> faculties = repository.getAll().orElse(List.of());
         return mapper.toDTO(faculties);
     }
 

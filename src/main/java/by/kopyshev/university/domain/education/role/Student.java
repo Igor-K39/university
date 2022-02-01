@@ -9,6 +9,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@NamedEntityGraph(name = "student-with-person-group", attributeNodes = {
+        @NamedAttributeNode("person"),
+        @NamedAttributeNode("studentGroup")
+})
 @Entity
 @Table(name = "student")
 @Access(AccessType.FIELD)

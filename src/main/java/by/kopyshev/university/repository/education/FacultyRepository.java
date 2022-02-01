@@ -11,13 +11,14 @@ import java.util.Optional;
 
 public interface FacultyRepository extends BaseRepository<Faculty> {
 
-    @EntityGraph(value = "with-departments")
+    @EntityGraph(value = "faculty-with-departments")
     @Query("SELECT f FROM Faculty f WHERE f.id = :id")
     Optional<Faculty> getWithDepartments(@Param("id") Integer id);
 
-    @EntityGraph(value = "with-departments")
+    @EntityGraph(value = "faculty-with-departments")
     @Query("SELECT f FROM Faculty f")
     Optional<List<Faculty>> getAllWithDepartments();
 
-
+    @Query("SELECT f FROM Faculty f ORDER BY f.name")
+    Optional<List<Faculty>> getAll();
 }

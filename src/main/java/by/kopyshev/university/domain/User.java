@@ -10,6 +10,9 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
+@NamedEntityGraph(name = "user-with-person", attributeNodes = {
+        @NamedAttributeNode("person")
+})
 @Entity
 @Table(name = "users")
 @Access(AccessType.FIELD)

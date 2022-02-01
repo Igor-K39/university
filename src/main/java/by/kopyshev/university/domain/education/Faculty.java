@@ -8,9 +8,10 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @NamedEntityGraph(
-        name = "with-departments",
-        includeAllAttributes = true
-)
+        name = "faculty-with-departments",
+        attributeNodes = {
+                @NamedAttributeNode("facultyDepartments")
+        })
 @Entity
 @Table(name = "faculty")
 @Access(AccessType.FIELD)

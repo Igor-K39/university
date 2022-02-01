@@ -47,7 +47,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<PersonDTO> getAll() {
         Sort sort = Sort.by(Sort.Direction.ASC, "lastName", "firstName", "middleName");
-        List<Person> personList = repository.getAll(sort).orElse(List.of());
+        List<Person> personList = repository.getAll().orElse(List.of());
         return mapper.toDTO(personList);
     }
 

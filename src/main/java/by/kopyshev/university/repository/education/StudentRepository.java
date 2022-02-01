@@ -2,6 +2,7 @@ package by.kopyshev.university.repository.education;
 
 import by.kopyshev.university.domain.education.role.Student;
 import by.kopyshev.university.repository.building.BaseRepository;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -10,6 +11,11 @@ import java.util.Optional;
 
 public interface StudentRepository extends BaseRepository<Student> {
 
+    @EntityGraph("student-with-person-group")
+    @Query("SELECT s FROM Student s ORDER BY s.person.lastName, s.person.firstName")
+    Optional<List<Student>> getAll();
+
+    @EntityGraph("student-with-person-group")
     @Query("SELECT s FROM Student s WHERE s.studentGroup.id = :groupId " +
             "ORDER BY s.person.lastName, s.person.firstName, s.person.middleName")
     Optional<List<Student>> getAll(@Param("groupId") int studentGroupId);
