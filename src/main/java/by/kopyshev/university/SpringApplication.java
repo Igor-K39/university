@@ -1,13 +1,12 @@
 package by.kopyshev.university;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UniversityApplication {
+public class SpringApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UniversityApplication.class, args);
+        org.springframework.boot.SpringApplication.run(SpringApplication.class, args);
     }
 
 }
