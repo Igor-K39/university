@@ -1,20 +1,23 @@
 package by.kopyshev.university.mapper.education;
 
 import by.kopyshev.university.domain.Person;
+import by.kopyshev.university.domain.education.StudentGroup;
 import by.kopyshev.university.domain.education.role.Student;
 import by.kopyshev.university.dto.education.student.StudentDTO;
 import by.kopyshev.university.dto.education.student.StudentPreviewDTO;
 import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.mapper.PersonMapper;
 import by.kopyshev.university.repository.PersonRepository;
 import by.kopyshev.university.repository.education.StudentGroupRepository;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class StudentMapper {
@@ -32,60 +35,74 @@ public class StudentMapper {
 
     @PostConstruct
     public void setup() {
-        Converter<StudentUpdateDTO, Student> toEntityPostConverter = ctx -> {
-            StudentUpdateDTO source = ctx.getSource();
-            Student destination = ctx.getDestination();
-            destination.setPerson(personRepository.getById(source.getPersonId()));
-            destination.setStudentGroup(studentGroupRepository.getById(source.getStudentGroupId()));
-            return destination;
-        };
         studentMapper.createTypeMap(StudentUpdateDTO.class, Student.class)
                 .addMappings(mapper -> mapper.skip(Student::setPerson))
                 .addMappings(mapper -> mapper.skip(Student::setStudentGroup))
-                .setPostConverter(toEntityPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
 
-        Converter<Student, StudentDTO> toDTOPostConverter = ctx -> {
-            Student source = ctx.getSource();
-            StudentDTO destination = ctx.getDestination();
-            destination.setPersonDTO(personMapper.toDTO(source.getPerson()));
-            destination.setStudentGroupId(source.getStudentGroup().getId());
-            return destination;
-        };
+                    var personId = source.getPersonId();
+                    var person = personRepository.findById(source.getPersonId()).orElseThrow(
+                            () -> new NotFoundException(Person.class, "id = " + personId));
+                    destination.setPerson(person);
+
+                    var studentGroupId = source.getStudentGroupId();
+                    var studentGroup = studentGroupRepository.findById(source.getStudentGroupId()).orElseThrow(
+                            () -> new NotFoundException(StudentGroup.class, "id = " + studentGroupId));
+                    destination.setStudentGroup(studentGroup);
+                    return destination;
+                });
+
         studentMapper.createTypeMap(Student.class, StudentDTO.class)
                 .addMappings(mapper -> mapper.skip(StudentDTO::setPersonDTO))
-                .addMappings(mapper -> mapper.skip(StudentDTO::setStudentGroupId))
-                .setPostConverter(toDTOPostConverter);
+                .addMappings(mapper -> mapper.map(s -> s.getStudentGroup().getId(), StudentDTO::setStudentGroupId))
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+                    destination.setPersonDTO(personMapper.toDTO(source.getPerson()));
+                    return destination;
+                });
 
-        Converter<Student, StudentPreviewDTO> toDTOPreviewPostConverter = ctx -> {
-            Person person = ctx.getSource().getPerson();
-            String name = person.getLastName() + " " + person.getFirstName();
-            StudentPreviewDTO destination = ctx.getDestination();
-            destination.setName(name);
-            destination.setPersonId(person.getId());
-            return ctx.getDestination();
-        };
         studentMapper.createTypeMap(Student.class, StudentPreviewDTO.class)
                 .addMappings(mapper -> mapper.map(s -> s.getPerson().getId(), StudentPreviewDTO::setPersonId))
-                .setPostConverter(toDTOPreviewPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+                    Person person = source.getPerson();
+                    destination.setName(person.getFirstName() + " " + person.getLastName());
+                    destination.setPersonId(person.getId());
+                    return destination;
+                });
     }
 
     public Student toEntity(StudentUpdateDTO studentUpdateDTO) {
-        return studentMapper.map(studentUpdateDTO, Student.class);
+        return isNull(studentUpdateDTO)
+                ? null
+                : studentMapper.map(studentUpdateDTO, Student.class);
     }
 
     public StudentDTO toDTO(Student student) {
-        return studentMapper.map(student, StudentDTO.class);
+        return isNull(student)
+                ? null
+                : studentMapper.map(student, StudentDTO.class);
     }
 
     public StudentPreviewDTO toPreviewDTO(Student student) {
-        return studentMapper.map(student, StudentPreviewDTO.class);
+        return isNull(student)
+                ? null
+                : studentMapper.map(student, StudentPreviewDTO.class);
     }
 
     public List<StudentDTO> toDTO(List<Student> students) {
-        return students.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(students)
+                ? null
+                : students.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public List<StudentPreviewDTO> toPreviewDTO(List<Student> students) {
-        return students.stream().map(this::toPreviewDTO).collect(Collectors.toList());
+        return isNull(students)
+                ? null
+                : students.stream().map(this::toPreviewDTO).collect(Collectors.toList());
     }
 }

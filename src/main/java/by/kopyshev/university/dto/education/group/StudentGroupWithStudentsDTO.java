@@ -23,6 +23,11 @@ public class StudentGroupWithStudentsDTO extends StudentGroupDTO {
         this.studentDTOs = studentDTOs;
     }
 
+    public StudentGroupWithStudentsDTO(StudentGroupDTO groupDTO, List<StudentDTO> studentDTOs) {
+        this(groupDTO.getId(), groupDTO.getName(), groupDTO.speciality, groupDTO.studyType, groupDTO.currentEducationYear,
+                groupDTO.admission, groupDTO.curator, studentDTOs);
+    }
+
     public List<StudentDTO> getStudentDTOs() {
         return studentDTOs;
     }
@@ -50,7 +55,7 @@ public class StudentGroupWithStudentsDTO extends StudentGroupDTO {
         return "StudentGroupWithStudentsDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", specialityDTO=" + specialityDTO +
+                ", specialityDTO=" + speciality +
                 ", studyType=" + studyType +
                 ", currentEducationYear=" + currentEducationYear +
                 ", admission=" + admission +

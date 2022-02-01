@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class StudentGroupDTO extends NamedDTO {
 
-    protected SpecialityDTO specialityDTO;
+    protected SpecialityDTO speciality;
 
     @NotNull
     protected StudyType studyType;
@@ -31,22 +31,22 @@ public class StudentGroupDTO extends NamedDTO {
     public StudentGroupDTO() {
     }
 
-    public StudentGroupDTO(Integer id, String name, SpecialityDTO specialityDTO, StudyType studyType,
+    public StudentGroupDTO(Integer id, String name, SpecialityDTO speciality, StudyType studyType,
                            Integer currentEducationYear, LocalDate admission, EducatorDTO curator) {
         super(id, name);
-        this.specialityDTO = specialityDTO;
+        this.speciality = speciality;
         this.studyType = studyType;
         this.currentEducationYear = currentEducationYear;
         this.admission = admission;
         this.curator = curator;
     }
 
-    public SpecialityDTO getSpecialityDTO() {
-        return specialityDTO;
+    public SpecialityDTO getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialityDTO(SpecialityDTO specialityId) {
-        this.specialityDTO = specialityId;
+    public void setSpeciality(SpecialityDTO specialityId) {
+        this.speciality = specialityId;
     }
 
     public StudyType getStudyType() {
@@ -87,7 +87,7 @@ public class StudentGroupDTO extends NamedDTO {
         if (!(o instanceof StudentGroupDTO)) return false;
         if (!super.equals(o)) return false;
         StudentGroupDTO that = (StudentGroupDTO) o;
-        return Objects.equals(specialityDTO, that.specialityDTO)
+        return Objects.equals(speciality, that.speciality)
                 && getStudyType() == that.getStudyType()
                 && Objects.equals(getCurrentEducationYear(), that.getCurrentEducationYear())
                 && Objects.equals(getAdmission(), that.getAdmission())
@@ -96,7 +96,7 @@ public class StudentGroupDTO extends NamedDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), specialityDTO, getStudyType(),
+        return Objects.hash(super.hashCode(), speciality, getStudyType(),
                 getCurrentEducationYear(), getAdmission(), getCurator());
     }
 
@@ -105,7 +105,7 @@ public class StudentGroupDTO extends NamedDTO {
         return "StudentGroup{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", speciality=" + specialityDTO +
+                ", speciality=" + speciality +
                 ", studyType=" + studyType +
                 ", currentEducationYear=" + currentEducationYear +
                 ", admission=" + admission +

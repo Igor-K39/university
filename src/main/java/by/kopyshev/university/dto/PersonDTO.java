@@ -138,6 +138,12 @@ public class PersonDTO extends BaseDTO {
         this.email = email;
     }
 
+    public String getShortName() {
+        return lastName + " "
+                + firstName.charAt(1) + "."
+                + middleName.charAt(1) + ".";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

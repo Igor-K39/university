@@ -5,13 +5,14 @@ import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.dto.building.LectureHallDTO;
 import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.repository.building.CampusRepository;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class LectureHallMapper {
@@ -24,36 +25,41 @@ public class LectureHallMapper {
 
     @PostConstruct
     public void setup() {
-        Converter<LectureHall, LectureHallDTO> toDTOPostConverter = ctx -> {
-            LectureHallDTO destination = ctx.getDestination();
-            destination.setCampusId(ctx.getSource().getCampus().id());
-            return destination;
-        };
         lectureHallMapper.createTypeMap(LectureHall.class, LectureHallDTO.class)
                 .addMappings(mapper -> mapper.skip(LectureHallDTO::setCampusId))
-                .setPostConverter(toDTOPostConverter);
+                .setPostConverter(ctx -> {
+                    var destination = ctx.getDestination();
+                    var id = ctx.getSource().getCampus().getId();
+                    destination.setCampusId(id);
+                    return destination;
+                });
 
-        Converter<LectureHallDTO, LectureHall> toUpdateDTOPostConverter = ctx -> {
-            Campus campus = campusRepository.findById(ctx.getSource().getCampusId())
-                    .orElseThrow(() -> new NotFoundException(Campus.class, "id = " + ctx.getSource().getCampusId()));
-            LectureHall lectureHall = ctx.getDestination();
-            lectureHall.setCampus(campus);
-            return lectureHall;
-        };
         lectureHallMapper.createTypeMap(LectureHallDTO.class, LectureHall.class)
                 .addMappings(mapper -> mapper.skip(LectureHall::setCampus))
-                .setPostConverter(toUpdateDTOPostConverter);
+                .setPostConverter(ctx -> {
+                    var campus = campusRepository.findById(ctx.getSource().getCampusId()).orElseThrow(
+                            () -> new NotFoundException(Campus.class, "id = " + ctx.getSource().getCampusId()));
+                    var destination = ctx.getDestination();
+                    destination.setCampus(campus);
+                    return destination;
+                });
     }
 
     public LectureHall toEntity(LectureHallDTO lectureHallDTO) {
-        return lectureHallMapper.map(lectureHallDTO, LectureHall.class);
+        return isNull(lectureHallDTO)
+                ? null
+                : lectureHallMapper.map(lectureHallDTO, LectureHall.class);
     }
 
     public LectureHallDTO toDTO(LectureHall lectureHall) {
-        return lectureHallMapper.map(lectureHall, LectureHallDTO.class);
+        return isNull(lectureHall)
+                ? null
+                : lectureHallMapper.map(lectureHall, LectureHallDTO.class);
     }
 
     public List<LectureHallDTO> toDTO(List<LectureHall> lectureHalls) {
-        return lectureHalls.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(lectureHalls)
+                ? null
+                : lectureHalls.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }

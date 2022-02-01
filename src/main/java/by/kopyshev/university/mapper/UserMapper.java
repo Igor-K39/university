@@ -11,6 +11,8 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Component
 public class UserMapper {
     private final ModelMapper userMapper = new ModelMapper();
@@ -42,14 +44,20 @@ public class UserMapper {
     }
 
     public User toEntity(UserUpdateDTO userUpdateDTO) {
-        return userMapper.map(userUpdateDTO, User.class);
+        return isNull(userUpdateDTO)
+                ? null
+                : userMapper.map(userUpdateDTO, User.class);
     }
 
     public UserDTO toDTO(User user) {
-        return userMapper.map(user, UserDTO.class);
+        return isNull(user)
+                ? null
+                : userMapper.map(user, UserDTO.class);
     }
 
     public List<UserDTO> toDTO(List<User> users) {
-        return users.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(users)
+                ? null
+                : users.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }

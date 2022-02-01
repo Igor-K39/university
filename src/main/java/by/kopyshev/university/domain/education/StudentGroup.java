@@ -11,7 +11,25 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
-@NamedEntityGraph(name = "with-students", includeAllAttributes = true)
+@NamedEntityGraph(
+        name = "with-students",
+        attributeNodes = {
+                @NamedAttributeNode(value = "students", subgraph = "students.person"),
+                @NamedAttributeNode(value = "curator", subgraph = "students.curator"),
+                @NamedAttributeNode(value = "speciality")
+
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "students.person", attributeNodes = {
+                        @NamedAttributeNode(value = "person"),
+                        @NamedAttributeNode(value = "studentGroup")
+                }),
+                @NamedSubgraph(name = "students.curator", attributeNodes = {
+                    @NamedAttributeNode(value = "person"),
+                    @NamedAttributeNode(value = "facultyDepartment"),
+                    @NamedAttributeNode(value = "lectureHall")
+                })
+        })
 @Entity
 @Table(name = "student_group")
 @Access(AccessType.FIELD)

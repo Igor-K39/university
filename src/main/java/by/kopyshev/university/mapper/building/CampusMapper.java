@@ -4,13 +4,14 @@ import by.kopyshev.university.domain.building.Campus;
 import by.kopyshev.university.dto.building.CampusDTO;
 import by.kopyshev.university.dto.building.CampusWithHallsDTO;
 import by.kopyshev.university.dto.building.LectureHallDTO;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class CampusMapper {
@@ -24,35 +25,41 @@ public class CampusMapper {
     @PostConstruct
     public void setup() {
         campusMapper.createTypeMap(Campus.class, CampusDTO.class);
-
-        Converter<Campus, CampusWithHallsDTO> toCampusWithHallsDTOPostConverter = ctx -> {
-            List<LectureHallDTO> lectureHallDTOs = lectureHallMapper.toDTO(ctx.getSource().getLectureHalls());
-            ctx.getDestination().setLectureHallsDTO(lectureHallDTOs);
-            return ctx.getDestination();
-        };
         campusMapper.createTypeMap(Campus.class, CampusWithHallsDTO.class)
-                .setPostConverter(toCampusWithHallsDTOPostConverter);
+                .setPostConverter(ctx -> {
+                    List<LectureHallDTO> lectureHallDTOs = lectureHallMapper.toDTO(ctx.getSource().getLectureHalls());
+                    ctx.getDestination().setLectureHallsDTO(lectureHallDTOs);
+                    return ctx.getDestination();
+                });
     }
 
     public Campus toEntity(CampusDTO campusDTO) {
-        return campusMapper.map(campusDTO, Campus.class);
+        return isNull(campusDTO)
+                ? null
+                : campusMapper.map(campusDTO, Campus.class);
     }
 
     public CampusDTO toDTO(Campus campus) {
-        return campusMapper.map(campus, CampusDTO.class);
+        return isNull(campus)
+                ? null
+                : campusMapper.map(campus, CampusDTO.class);
     }
 
     public CampusWithHallsDTO toDTOWithHalls(Campus campus) {
-        CampusWithHallsDTO campusWithHallsDTO = campusMapper.map(campus, CampusWithHallsDTO.class);
-        System.out.println(campusWithHallsDTO);
-        return campusWithHallsDTO;
+        return isNull(campus)
+                ? null
+                : campusMapper.map(campus, CampusWithHallsDTO.class);
     }
 
     public List<CampusDTO> toDTO(List<Campus> campuses) {
-        return campuses.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(campuses)
+                ? null
+                : campuses.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public List<CampusWithHallsDTO> toDTOWithHalls(List<Campus> campuses) {
-        return campuses.stream().map(this::toDTOWithHalls).collect(Collectors.toList());
+        return isNull(campuses)
+                ? null
+                : campuses.stream().map(this::toDTOWithHalls).collect(Collectors.toList());
     }
 }

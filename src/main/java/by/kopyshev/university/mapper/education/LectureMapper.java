@@ -1,21 +1,25 @@
 package by.kopyshev.university.mapper.education;
 
-import by.kopyshev.university.domain.Person;
+import by.kopyshev.university.domain.building.LectureHall;
 import by.kopyshev.university.domain.education.StudentGroup;
+import by.kopyshev.university.domain.education.lecture.Discipline;
 import by.kopyshev.university.domain.education.lecture.Lecture;
+import by.kopyshev.university.domain.education.role.Educator;
 import by.kopyshev.university.dto.education.lecture.LectureDTO;
 import by.kopyshev.university.dto.education.lecture.LectureUpdateDTO;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.repository.building.LectureHallRepository;
 import by.kopyshev.university.repository.education.DisciplineRepository;
 import by.kopyshev.university.repository.education.EducatorRepository;
 import by.kopyshev.university.repository.education.StudentGroupRepository;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class LectureMapper {
@@ -38,55 +42,69 @@ public class LectureMapper {
 
     @PostConstruct
     public void setup() {
-        Converter<LectureUpdateDTO, Lecture> toEntityPostConverter = ctx -> {
-            LectureUpdateDTO source = ctx.getSource();
-            Lecture destination = ctx.getDestination();
-            destination.setDiscipline(disciplineRepository.getById(source.getDisciplineId()));
-            destination.setLectureHall(lectureHallRepository.getById(source.getLectureHallId()));
-            destination.setEducator(educatorRepository.getById(source.getEducatorId()));
-            destination.setStudentGroup(studentGroupRepository.getById(source.getStudentGroupId()));
-            return ctx.getDestination();
-        };
         facultyDepartmentMapper.createTypeMap(LectureUpdateDTO.class, Lecture.class)
                 .addMappings(mapper -> mapper.skip(Lecture::setDiscipline))
                 .addMappings(mapper -> mapper.skip(Lecture::setLectureHall))
                 .addMappings(mapper -> mapper.skip(Lecture::setEducator))
                 .addMappings(mapper -> mapper.skip(Lecture::setStudentGroup))
-                .setPostConverter(toEntityPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
 
-        Converter<Lecture, LectureDTO> toDTOPostConverter = ctx -> {
-            Lecture source = ctx.getSource();
-            LectureDTO destination = ctx.getDestination();
+                    var disciplineId = source.getDisciplineId();
+                    var discipline = disciplineRepository.findById(disciplineId).orElseThrow(
+                            () -> new NotFoundException(Discipline.class, "id = " + disciplineId));
+                    destination.setDiscipline(discipline);
 
-            destination.setDisciplineDTO(disciplineMapper.toDTO(source.getDiscipline()));
-            destination.setLectureHallNumber(source.getLectureHall().getNumber());
-            destination.setCampusNumber(source.getLectureHall().getCampus().getNumber());
+                    var lectureHallId = source.getLectureHallId();
+                    var lectureHall = lectureHallRepository.findById(lectureHallId).orElseThrow(
+                            () -> new NotFoundException(LectureHall.class, "id = " + lectureHallId));
+                    destination.setLectureHall(lectureHall);
 
-            Person educatorPerson = source.getEducator().getPerson();
-            String educator = educatorPerson.getLastName() + " "
-                    + educatorPerson.getFirstName().charAt(0) + ". "
-                    + educatorPerson.getMiddleName().charAt(0) + "., "
-                    + source.getEducator().getPosition();
-            destination.setEducator(educator);
+                    var educatorId = source.getEducatorId();
+                    var educator = educatorRepository.findById(educatorId).orElseThrow(
+                            () -> new NotFoundException(Educator.class, "id = " + educatorId));
+                    destination.setEducator(educator);
 
-            StudentGroup group = source.getStudentGroup();
-            destination.setStudentGroupName(group.getName());
-            destination.setStudentGroupId(group.getId());
-            return destination;
-        };
+                    var studentGroupId = source.getStudentGroupId();
+                    var studentGroup = studentGroupRepository.findById(studentGroupId).orElseThrow(
+                            () -> new NotFoundException(StudentGroup.class, "id = " + studentGroupId));
+                    destination.setStudentGroup(studentGroup);
+                    return destination;
+                });
+
         facultyDepartmentMapper.createTypeMap(Lecture.class, LectureDTO.class)
-                .setPostConverter(toDTOPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+
+                    destination.setDisciplineDTO(disciplineMapper.toDTO(source.getDiscipline()));
+                    destination.setLectureHallNumber(source.getLectureHall().getNumber());
+                    destination.setCampusNumber(source.getLectureHall().getCampus().getNumber());
+                    destination.setEducator(source.getEducator().getPerson().getShortName());
+
+                    StudentGroup group = source.getStudentGroup();
+                    destination.setStudentGroupName(group.getName());
+                    destination.setStudentGroupId(group.getId());
+                    return destination;
+                });
     }
 
     public Lecture toEntity(LectureUpdateDTO lectureUpdateDTO) {
-        return facultyDepartmentMapper.map(lectureUpdateDTO, Lecture.class);
+        return isNull(lectureUpdateDTO)
+                ? null
+                : facultyDepartmentMapper.map(lectureUpdateDTO, Lecture.class);
     }
 
     public LectureDTO toDTO(Lecture lecture) {
-        return facultyDepartmentMapper.map(lecture, LectureDTO.class);
+        return isNull(lecture)
+                ? null
+                : facultyDepartmentMapper.map(lecture, LectureDTO.class);
     }
 
     public List<LectureDTO> toDTO(List<Lecture> lectures) {
-        return lectures.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(lectures)
+                ? null
+                : lectures.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }

@@ -1,18 +1,22 @@
 package by.kopyshev.university.mapper.education;
 
+import by.kopyshev.university.domain.education.Speciality;
 import by.kopyshev.university.domain.education.StudentGroup;
+import by.kopyshev.university.domain.education.role.Educator;
 import by.kopyshev.university.dto.education.group.StudentGroupDTO;
 import by.kopyshev.university.dto.education.group.StudentGroupUpdateDTO;
 import by.kopyshev.university.dto.education.group.StudentGroupWithStudentsDTO;
-import by.kopyshev.university.repository.education.SpecialityRepository;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.repository.education.EducatorRepository;
-import org.modelmapper.Converter;
+import by.kopyshev.university.repository.education.SpecialityRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class StudentGroupMapper {
@@ -35,58 +39,74 @@ public class StudentGroupMapper {
 
     @PostConstruct
     public void setup() {
-        Converter<StudentGroup, StudentGroupDTO> toDTOPostConverter = ctx -> {
-            StudentGroup source = ctx.getSource();
-            StudentGroupDTO destination = ctx.getDestination();
-            destination.setSpecialityDTO(specialityMapper.toDTO(source.getSpeciality()));
-            destination.setCurator(educatorMapper.toDTO(source.getCurator()));
-            return destination;
-        };
         studentGroupMapper.createTypeMap(StudentGroup.class, StudentGroupDTO.class)
-                .addMappings(mapper -> mapper.skip(StudentGroupDTO::setSpecialityDTO))
+                .addMappings(mapper -> mapper.skip(StudentGroupDTO::setSpeciality))
                 .addMappings(mapper -> mapper.skip(StudentGroupDTO::setCurator))
-                .setPostConverter(toDTOPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+                    destination.setSpeciality(specialityMapper.toDTO(source.getSpeciality()));
+                    destination.setCurator(educatorMapper.toDTO(source.getCurator()));
+                    return destination;
+                });
 
-        Converter<StudentGroupUpdateDTO, StudentGroup> toEntityPostConverter = ctx -> {
-            StudentGroupUpdateDTO source = ctx.getSource();
-            StudentGroup destination = ctx.getDestination();
-            destination.setSpeciality(specialityRepository.getById(source.getSpecialityId()));
-            destination.setCurator(educatorRepository.getById(source.getCuratorId()));
-            return destination;
-        };
+
         studentGroupMapper.createTypeMap(StudentGroupUpdateDTO.class, StudentGroup.class)
                 .addMappings(mapper -> mapper.skip(StudentGroup::setSpeciality))
                 .addMappings(mapper -> mapper.skip(StudentGroup::setCurator))
-                .setPostConverter(toEntityPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
 
-        Converter<StudentGroup, StudentGroupWithStudentsDTO> toStudentGroupWithStudentsPostConverter = ctx -> {
-            StudentGroup source = ctx.getSource();
-            StudentGroupWithStudentsDTO destination = ctx.getDestination();
-            destination.setStudentDTOs(studentMapper.toDTO(source.getStudents()));
-            return destination;
-        };
+                    var specialityId = source.getSpecialityId();
+                    var speciality = specialityRepository.findById(source.getSpecialityId()).orElseThrow(
+                            () -> new NotFoundException(Speciality.class, "id = " + specialityId));
+                    destination.setSpeciality(speciality);
+
+                    var curatorId = source.getCuratorId();
+                    var curator = educatorRepository.findById(source.getCuratorId()).orElseThrow(
+                            () -> new NotFoundException(Educator.class, "id = " + curatorId));
+                    destination.setCurator(curator);
+                    return destination;
+                });
+
         studentGroupMapper.createTypeMap(StudentGroup.class, StudentGroupWithStudentsDTO.class)
                 .addMappings(mapper -> mapper.skip(StudentGroupWithStudentsDTO::setStudentDTOs))
-                .setPostConverter(toStudentGroupWithStudentsPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+                    destination.setStudentDTOs(studentMapper.toDTO(source.getStudents()));
+                    return destination;
+                });
     }
 
     public StudentGroup toEntity(StudentGroupUpdateDTO studentGroupUpdateDTO) {
-        return studentGroupMapper.map(studentGroupUpdateDTO, StudentGroup.class);
+        return isNull(studentGroupUpdateDTO)
+                ? null
+                : studentGroupMapper.map(studentGroupUpdateDTO, StudentGroup.class);
     }
 
     public StudentGroupDTO toDTO(StudentGroup studentGroup) {
-        return studentGroupMapper.map(studentGroup, StudentGroupDTO.class);
+        return isNull(studentGroup)
+                ? null
+                : studentGroupMapper.map(studentGroup, StudentGroupDTO.class);
     }
 
     public StudentGroupWithStudentsDTO toDTOWithStudents(StudentGroup studentGroup) {
-        return studentGroupMapper.map(studentGroup, StudentGroupWithStudentsDTO.class);
+        return isNull(studentGroup)
+                ? null
+                : studentGroupMapper.map(studentGroup, StudentGroupWithStudentsDTO.class);
     }
 
     public List<StudentGroupDTO> toDTO(List<StudentGroup> studentGroups) {
-        return studentGroups.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(studentGroups)
+                ? null
+                : studentGroups.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public List<StudentGroupWithStudentsDTO> toDTOWithStudents(List<StudentGroup> studentGroups) {
-        return studentGroups.stream().map(this::toDTOWithStudents).collect(Collectors.toList());
+        return isNull(studentGroups)
+                ? null
+                : studentGroups.stream().map(this::toDTOWithStudents).collect(Collectors.toList());
     }
 }

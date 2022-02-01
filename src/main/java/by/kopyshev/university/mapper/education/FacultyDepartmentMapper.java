@@ -4,14 +4,16 @@ import by.kopyshev.university.domain.education.Faculty;
 import by.kopyshev.university.domain.education.FacultyDepartment;
 import by.kopyshev.university.dto.education.FacultyDepartmentDTO;
 import by.kopyshev.university.dto.education.FacultyDepartmentWithDisciplinesDTO;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.repository.education.FacultyRepository;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class FacultyDepartmentMapper {
@@ -26,49 +28,59 @@ public class FacultyDepartmentMapper {
 
     @PostConstruct
     public void setup() {
-        Converter<FacultyDepartmentDTO, FacultyDepartment> toEntityPostConverter = ctx -> {
-            Faculty faculty = facultyRepository.getById(ctx.getSource().getFacultyId());
-            ctx.getDestination().setFaculty(faculty);
-            return ctx.getDestination();
-        };
         facultyDepartmentMapper.createTypeMap(FacultyDepartmentDTO.class, FacultyDepartment.class)
                 .addMappings(mapper -> mapper.skip(FacultyDepartment::setFaculty))
-                .setPostConverter(toEntityPostConverter);
-        
-        Converter<FacultyDepartment, FacultyDepartmentDTO> toDTOPostConverter = ctx -> {
-            ctx.getDestination().setFacultyId(ctx.getSource().getFaculty().getId());
-            return ctx.getDestination();
-        };
-        facultyDepartmentMapper.createTypeMap(FacultyDepartment.class, FacultyDepartmentDTO.class)
-                .addMappings(mapper -> mapper.skip(FacultyDepartmentDTO::setFacultyId))
-                .setPostConverter(toDTOPostConverter);
+                .setPostConverter(ctx -> {
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+                    var facultyId = source.getFacultyId();
+                    var faculty = facultyRepository.findById(facultyId).orElseThrow(
+                            () -> new NotFoundException(Faculty.class, "id = " + facultyId));
+                    destination.setFaculty(faculty);
+                    return destination;
+                });
 
-        Converter<FacultyDepartment, FacultyDepartmentWithDisciplinesDTO> toDTOWithDisciplines = ctx -> {
-            ctx.getDestination().setDisciplineDTOs(disciplineMapper.toDTO(ctx.getSource().getDisciplines()));
-            return ctx.getDestination();
-        };
+        facultyDepartmentMapper.createTypeMap(FacultyDepartment.class, FacultyDepartmentDTO.class)
+                .addMappings(mapper -> mapper.map(s -> s.getFaculty().getId(), FacultyDepartmentDTO::setFacultyId));
+
         facultyDepartmentMapper.createTypeMap(FacultyDepartment.class, FacultyDepartmentWithDisciplinesDTO.class)
                 .addMappings(mapper -> mapper.skip(FacultyDepartmentWithDisciplinesDTO::setDisciplineDTOs))
-                .setPostConverter(toDTOWithDisciplines);
+                .setPostConverter(ctx -> {
+                    var destination = ctx.getDestination();
+                    var source = ctx.getSource();
+                    var disciplinesDTO = disciplineMapper.toDTO(source.getDisciplines());
+                    destination.setDisciplineDTOs(disciplinesDTO);
+                    return destination;
+                });
     }
 
     public FacultyDepartment toEntity(FacultyDepartmentDTO facultyDepartmentDTO) {
-        return facultyDepartmentMapper.map(facultyDepartmentDTO, FacultyDepartment.class);
+        return isNull(facultyDepartmentDTO)
+                ? null
+                : facultyDepartmentMapper.map(facultyDepartmentDTO, FacultyDepartment.class);
     }
 
     public FacultyDepartmentDTO toDTO(FacultyDepartment facultyDepartment) {
-        return facultyDepartmentMapper.map(facultyDepartment, FacultyDepartmentDTO.class);
+        return isNull(facultyDepartment)
+                ? null
+                : facultyDepartmentMapper.map(facultyDepartment, FacultyDepartmentDTO.class);
     }
 
     public FacultyDepartmentWithDisciplinesDTO toDTOWithDisciplines(FacultyDepartment facultyDepartment) {
-        return facultyDepartmentMapper.map(facultyDepartment, FacultyDepartmentWithDisciplinesDTO.class);
+        return isNull(facultyDepartment)
+                ? null
+                : facultyDepartmentMapper.map(facultyDepartment, FacultyDepartmentWithDisciplinesDTO.class);
     }
 
     public List<FacultyDepartmentDTO> toDTO(List<FacultyDepartment> facultyDepartments) {
-        return facultyDepartments.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(facultyDepartments)
+                ? null
+                : facultyDepartments.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public List<FacultyDepartmentWithDisciplinesDTO> toDTOWithDisciplines(List<FacultyDepartment> facultyDepartments) {
-        return facultyDepartments.stream().map(this::toDTOWithDisciplines).collect(Collectors.toList());
+        return isNull(facultyDepartments)
+                ? null
+                : facultyDepartments.stream().map(this::toDTOWithDisciplines).collect(Collectors.toList());
     }
 }

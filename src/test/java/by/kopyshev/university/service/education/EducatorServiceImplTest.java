@@ -73,7 +73,7 @@ class EducatorServiceImplTest extends AbstractServiceTest {
 
     @Test
     void update() {
-        EducatorUpdateDTO updated = EducatorConstants.getUpdated(EDUCATOR_1_ID, educator1DTO.getPersonDTO().id());
+        EducatorUpdateDTO updated = EducatorConstants.getUpdated(EDUCATOR_1_ID, educator1DTO.getPerson().id());
         service.update(updated);
         EDUCATOR_DTO_MATCHER.assertMatch(mapper.toDTO(mapper.toEntity(updated)), service.get(EDUCATOR_1_ID));
     }

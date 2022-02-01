@@ -9,6 +9,8 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Component
 public class PersonMapper {
     private final ModelMapper mapper = new ModelMapper();
@@ -19,14 +21,20 @@ public class PersonMapper {
     }
 
     public Person toEntity(PersonDTO personDTO) {
-        return mapper.map(personDTO, Person.class);
+        return isNull(personDTO)
+                ? null
+                : mapper.map(personDTO, Person.class);
     }
 
     public PersonDTO toDTO(Person person) {
-        return mapper.map(person, PersonDTO.class);
+        return isNull(person)
+                ? null
+                : mapper.map(person, PersonDTO.class);
     }
 
     public List<PersonDTO> toDTO(List<Person> personList) {
-        return personList.stream().map(this::toDTO).collect(Collectors.toList());
+        return isNull(personList)
+                ? null
+                : personList.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
