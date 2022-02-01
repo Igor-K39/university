@@ -1,6 +1,7 @@
 package by.kopyshev.university;
 
 import by.kopyshev.university.util.JsonUtil;
+import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -20,9 +21,14 @@ public class MatcherFactory {
     }
 
     public static <T> Matcher<T> usingIgnoreFieldComparator(Class<T> tClass, String... fieldsToIgnore) {
+        var configuration =
+                RecursiveComparisonConfiguration.builder()
+                        .withIgnoredFields(fieldsToIgnore)
+                        .build();
+
         return usingAssertions(tClass,
                 (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields(fieldsToIgnore).isEqualTo(e),
-                (a, e) -> assertThat(a).usingRecursiveFieldByFieldElementComparatorIgnoringFields(fieldsToIgnore).isEqualTo(e));
+                (a, e) -> assertThat(a).usingRecursiveComparison(configuration).isEqualTo(e));
     }
 
     public static class Matcher<T> {
