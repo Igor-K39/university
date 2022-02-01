@@ -30,6 +30,11 @@ public class StudentPreviewDTO extends NamedDTO {
         this.leader = leader;
     }
 
+    public StudentPreviewDTO(StudentDTO studentDTO) {
+        this(studentDTO.getId(), studentDTO.getFullName(), studentDTO.getRecordBookNumber(),
+                studentDTO.getPersonDTO().getId(), studentDTO.getStudentGroupId(), studentDTO.isLeader());
+    }
+
     public String getRecordBookNumber() {
         return recordBookNumber;
     }

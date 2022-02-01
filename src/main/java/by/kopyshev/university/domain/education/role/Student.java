@@ -75,6 +75,10 @@ public class Student extends BaseEntity {
         this.leader = leader;
     }
 
+    public String getFullName() {
+        return person.getFirstName() + " " + person.getLastName();
+    }
+
     @Override
     public String toString() {
         return "Student{" +

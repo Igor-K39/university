@@ -69,9 +69,8 @@ public class StudentMapper {
                 .setPostConverter(ctx -> {
                     var source = ctx.getSource();
                     var destination = ctx.getDestination();
-                    Person person = source.getPerson();
-                    destination.setName(person.getFirstName() + " " + person.getLastName());
-                    destination.setPersonId(person.getId());
+                    destination.setName(source.getFullName());
+                    destination.setPersonId(source.getPerson().getId());
                     return destination;
                 });
     }

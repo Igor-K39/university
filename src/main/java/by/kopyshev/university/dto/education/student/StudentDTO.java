@@ -2,6 +2,7 @@ package by.kopyshev.university.dto.education.student;
 
 import by.kopyshev.university.dto.BaseDTO;
 import by.kopyshev.university.dto.PersonDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -61,6 +62,11 @@ public class StudentDTO extends BaseDTO {
 
     public void setLeader(boolean leader) {
         this.leader = leader;
+    }
+
+    @JsonIgnore
+    public String getFullName() {
+        return personDTO.getFirstName() + " " + personDTO.getLastName();
     }
 
     @Override

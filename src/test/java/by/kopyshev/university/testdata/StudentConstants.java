@@ -1,16 +1,21 @@
 package by.kopyshev.university.testdata;
 
 import by.kopyshev.university.MatcherFactory;
-import by.kopyshev.university.dto.education.group.StudentGroupDTO;
 import by.kopyshev.university.dto.education.student.StudentDTO;
+import by.kopyshev.university.dto.education.student.StudentPreviewDTO;
+import by.kopyshev.university.dto.education.student.StudentUpdateDTO;
+
+import java.util.List;
 
 import static by.kopyshev.university.testdata.PersonConstants.*;
 import static by.kopyshev.university.testdata.StudentGroupConstants.*;
 
 public class StudentConstants {
+    public static final MatcherFactory.Matcher<StudentDTO> STUDENT_DTO_MATCHER
+            = MatcherFactory.usingIgnoreFieldComparator(StudentDTO.class);
 
-    public static final MatcherFactory.Matcher<StudentGroupDTO> STUDENT_GROUP_DTO_MATCHER
-            = MatcherFactory.usingIgnoreFieldComparator(StudentGroupDTO.class);
+    public static final MatcherFactory.Matcher<StudentPreviewDTO> STUDENT_PREVIEW_DTO_MATCHER
+            = MatcherFactory.usingIgnoreFieldComparator(StudentPreviewDTO.class);
 
     public static final int STUDENT_1_ID = 100_038;
     public static final int STUDENT_2_ID = 100_039;
@@ -45,4 +50,28 @@ public class StudentConstants {
             STUDENT_GROUP_4_ID);
     public static final StudentDTO student8DTO = new StudentDTO(STUDENT_8_ID, STUDENT_8_RECORD_BOOK, studentPerson8,
             STUDENT_GROUP_4_ID);
+
+    public static final StudentPreviewDTO studentPreview1DTO = new StudentPreviewDTO(student1DTO);
+    public static final StudentPreviewDTO studentPreview2DTO = new StudentPreviewDTO(student2DTO);
+    public static final StudentPreviewDTO studentPreview3DTO = new StudentPreviewDTO(student3DTO);
+    public static final StudentPreviewDTO studentPreview4DTO = new StudentPreviewDTO(student4DTO);
+    public static final StudentPreviewDTO studentPreview5DTO = new StudentPreviewDTO(student5DTO);
+    public static final StudentPreviewDTO studentPreview6DTO = new StudentPreviewDTO(student6DTO);
+    public static final StudentPreviewDTO studentPreview7DTO = new StudentPreviewDTO(student7DTO);
+    public static final StudentPreviewDTO studentPreview8DTO = new StudentPreviewDTO(student8DTO);
+
+    public static List<StudentDTO> allStudentsDTO = List.of(student2DTO, student8DTO, student4DTO, student7DTO,
+            student5DTO, student6DTO, student1DTO, student3DTO);
+
+    public static List<StudentPreviewDTO> allStudentsPreviewDTO = List.of(studentPreview2DTO, studentPreview8DTO,
+            studentPreview4DTO, studentPreview7DTO, studentPreview5DTO, studentPreview6DTO, studentPreview1DTO,
+            studentPreview3DTO);
+
+    public static StudentUpdateDTO getNew(int personId) {
+        return new StudentUpdateDTO(null, "new record book", personId, STUDENT_GROUP_1_ID);
+    }
+
+    public static StudentUpdateDTO getUpdated(int id, int personId) {
+        return new StudentUpdateDTO(id, "upd record book", personId, STUDENT_GROUP_1_ID);
+    }
 }
