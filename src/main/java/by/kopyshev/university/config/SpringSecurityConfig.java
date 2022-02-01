@@ -1,11 +1,6 @@
 package by.kopyshev.university.config;
 
 import by.kopyshev.university.service.UserService;
-import by.kopyshev.university.web.controller.user.ProfileRestController;
-import by.kopyshev.university.web.controller.person.PersonRestController;
-import by.kopyshev.university.web.controller.education.educator.EducatorRestController;
-import by.kopyshev.university.web.controller.education.lecture.AdminLectureRestController;
-import by.kopyshev.university.web.controller.education.student.StudentRestController;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,13 +12,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import static by.kopyshev.university.web.controller.building.CampusRestController.CAMPUS_REST_URL;
 import static by.kopyshev.university.web.controller.building.LectureHallRestController.LECTURE_HALL_REST_URL;
 import static by.kopyshev.university.web.controller.education.discipline.DisciplineRestController.DISCIPLINE_REST_URL;
+import static by.kopyshev.university.web.controller.education.educator.EducatorRestController.EDUCATOR_REST_URL;
 import static by.kopyshev.university.web.controller.education.educator.PreviewEducatorRestController.PREVIEW_EDUCATOR_REST_URL;
 import static by.kopyshev.university.web.controller.education.faculty.FacultyDepartmentRestController.FACULTY_DEPARTMENT_REST_URL;
 import static by.kopyshev.university.web.controller.education.faculty.FacultyRestController.FACULTY_REST_URL;
 import static by.kopyshev.university.web.controller.education.group.StudentGroupRestController.STUDENT_GROUP_REST_URL;
+import static by.kopyshev.university.web.controller.education.lecture.AdminLectureRestController.ADMIN_LECTURE_REST_URL;
 import static by.kopyshev.university.web.controller.education.lecture.LectureRestController.LECTURE_REST_URL;
 import static by.kopyshev.university.web.controller.education.speciality.SpecialityRestController.SPECIALITY_REST_URL;
 import static by.kopyshev.university.web.controller.education.student.PreviewStudentRestController.PREVIEW_STUDENT_REST_URL;
+import static by.kopyshev.university.web.controller.education.student.StudentRestController.STUDENT_REST_URL;
+import static by.kopyshev.university.web.controller.person.PersonRestController.PERSON_REST_URL;
+import static by.kopyshev.university.web.controller.user.ProfileRestController.PROFILE_REST_URL;
 
 @Configuration
 @EnableWebSecurity
@@ -58,17 +58,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         };
 
         String[] authenticatedApi = new String[] {
-                STUDENT_GROUP_REST_URL + "**",
                 LECTURE_REST_URL + "/**",
                 PREVIEW_STUDENT_REST_URL + "/**",
-                ProfileRestController.PROFILE_REST_URL + "/**"
+                PROFILE_REST_URL + "/**"
         };
 
         String[] dispatcherApi = new String[] {
-                EducatorRestController.EDUCATOR_REST_URL + "/**",
-                AdminLectureRestController.ADMIN_LECTURE_REST_URL + "/**",
-                StudentRestController.STUDENT_REST_URL + "**",
-                PersonRestController.PERSON_REST_URL + "**"
+                STUDENT_GROUP_REST_URL + "**",
+                EDUCATOR_REST_URL + "/**",
+                ADMIN_LECTURE_REST_URL + "/**",
+                STUDENT_REST_URL + "**",
+                PERSON_REST_URL + "**"
         };
 
         http
