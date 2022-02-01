@@ -29,6 +29,25 @@ public class UserDTO extends BaseDTO implements UserDetails {
 
     private Set<Role> roles = Set.of();
 
+    public UserDTO() {
+    }
+
+    public UserDTO(Integer id, PersonDTO personDTO, String username, String password, boolean enabled, Date registered,
+                   Set<Role> roles) {
+        super(id);
+        this.personDTO = personDTO;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        this.roles = Set.copyOf(roles);
+    }
+
+    public UserDTO(UserDTO userDTO) {
+        this(userDTO.id, userDTO.personDTO, userDTO.username, userDTO.password, userDTO.enabled, userDTO.registered,
+                userDTO.roles);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

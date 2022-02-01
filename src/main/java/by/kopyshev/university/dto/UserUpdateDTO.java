@@ -28,6 +28,25 @@ public class UserUpdateDTO extends BaseDTO {
 
     private Set<Role> roles = Set.of();
 
+    public UserUpdateDTO() {
+    }
+
+    public UserUpdateDTO(Integer id, Integer personId, String username, String password,
+                         boolean enabled, Date registered, Set<Role> roles) {
+        super(id);
+        this.personId = personId;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        this.roles = Set.copyOf(roles);
+    }
+
+    public UserUpdateDTO(UserUpdateDTO updateDTO) {
+        this(updateDTO.id, updateDTO.personId, updateDTO.username, updateDTO.password, updateDTO.enabled,
+                updateDTO.registered, updateDTO.roles);
+    }
+
     public Integer getPersonId() {
         return personId;
     }

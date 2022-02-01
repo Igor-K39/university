@@ -1,8 +1,10 @@
 package by.kopyshev.university.mapper;
 
+import by.kopyshev.university.domain.Person;
 import by.kopyshev.university.domain.User;
 import by.kopyshev.university.dto.UserDTO;
 import by.kopyshev.university.dto.UserUpdateDTO;
+import by.kopyshev.university.exception.NotFoundException;
 import by.kopyshev.university.repository.PersonRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -29,8 +31,12 @@ public class UserMapper {
         userMapper.createTypeMap(UserUpdateDTO.class, User.class)
                 .addMappings(mapper -> mapper.skip(User::setPerson))
                 .setPostConverter(ctx -> {
-                    User destination = ctx.getDestination();
-                    destination.setPerson(personRepository.getById(ctx.getSource().getPersonId()));
+                    var source = ctx.getSource();
+                    var destination = ctx.getDestination();
+                    var personId = source.getPersonId();
+                    var person = personRepository.findById(personId).orElseThrow(
+                            () -> new NotFoundException(Person.class, "id = " + personId));
+                    destination.setPerson(person);
                     return destination;
                 });
 

@@ -33,11 +33,12 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public UserDTO create(UserUpdateDTO userUpdateDTO) {
         checkNew(userUpdateDTO);
         User user = userMapper.toEntity(userUpdateDTO);
-        encodePassword(user);
         System.out.println(user);
+        encodePassword(user);
         return userMapper.toDTO(repository.save(user));
     }
 
