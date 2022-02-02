@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDTO get(int id) {
-        User user = repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
+        User user = repository.findById(id).orElseThrow(() -> new NotFoundException(User.class, "id = " + id));
         return userMapper.toDTO(user);
     }
 
@@ -54,7 +54,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void update(UserUpdateDTO userUpdateDTO) {
         int id = userUpdateDTO.id();
-        repository.findById(id).orElseThrow(() -> new NotFoundException(Student.class, "id = " + id));
+        repository.findById(id).orElseThrow(() -> new NotFoundException(User.class, "id = " + id));
         User user = userMapper.toEntity(userUpdateDTO);
         encodePassword(user);
         repository.save(user);
