@@ -41,7 +41,7 @@ class UserServiceTest extends AbstractServiceTest {
     @Test
     void getAll() {
         List<UserDTO> actual = service.getAll();
-        USER_DTO_MATCHER.assertMatch(List.of(studentDTO, dispatcherDTO, adminDTO), actual);
+        USER_DTO_MATCHER.assertMatch(List.of(dispatcherDTO, adminDTO, studentDTO), actual);
     }
 
     @Test

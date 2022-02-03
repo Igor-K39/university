@@ -11,7 +11,8 @@ import java.util.Date;
 import java.util.Set;
 
 @NamedEntityGraph(name = "user-with-person", attributeNodes = {
-        @NamedAttributeNode("person")
+        @NamedAttributeNode("person"),
+        @NamedAttributeNode("roles")
 })
 @Entity
 @Table(name = "users")

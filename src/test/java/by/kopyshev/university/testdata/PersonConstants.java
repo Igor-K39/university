@@ -204,18 +204,18 @@ public class PersonConstants {
 
     public static final List<PersonDTO> allPersons = new ArrayList<>();
     static {
-        allPersons.add(educatorPerson3);
-        allPersons.add(educatorPerson4);
-        allPersons.add(studentPerson2);
-        allPersons.add(studentPerson8);
-        allPersons.add(educatorPerson1);
-        allPersons.add(studentPerson4);
-        allPersons.add(studentPerson7);
-        allPersons.add(educatorPerson2);
         allPersons.add(studentPerson5);
-        allPersons.add(studentPerson6);
+        allPersons.add(educatorPerson3);
+        allPersons.add(educatorPerson1);
+        allPersons.add(studentPerson7);
+        allPersons.add(educatorPerson4);
         allPersons.add(studentPerson1);
+        allPersons.add(studentPerson6);
         allPersons.add(studentPerson3);
+        allPersons.add(studentPerson8);
+        allPersons.add(studentPerson4);
+        allPersons.add(studentPerson2);
+        allPersons.add(educatorPerson2);  
     }
 
     public static PersonDTO getNew() {

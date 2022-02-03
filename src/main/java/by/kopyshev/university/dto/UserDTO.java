@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
+
+import static java.util.Objects.isNull;
 
 public class UserDTO extends BaseDTO implements UserDetails {
 
@@ -27,7 +27,7 @@ public class UserDTO extends BaseDTO implements UserDetails {
 
     private Date registered = new Date();
 
-    private Set<Role> roles = Set.of();
+    private Set<Role> roles = new HashSet<>();
 
     public UserDTO() {
     }
@@ -40,7 +40,7 @@ public class UserDTO extends BaseDTO implements UserDetails {
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
-        this.roles = Set.copyOf(roles);
+        this.roles = isNull(roles) ? this.roles : Set.copyOf(roles);
     }
 
     public UserDTO(UserDTO userDTO) {
@@ -101,7 +101,7 @@ public class UserDTO extends BaseDTO implements UserDetails {
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roles = Set.copyOf(roles);
+        this.roles = isNull(roles) ? this.roles : Set.copyOf(roles);
     }
 
     @Override

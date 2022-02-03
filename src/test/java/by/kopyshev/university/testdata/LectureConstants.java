@@ -40,10 +40,10 @@ public class LectureConstants {
     public static final LocalDate LECTURE_2_DATE = LocalDate.parse("2022-01-25");
     public static final LocalDate LECTURE_3_DATE = LocalDate.parse("2022-01-25");
     public static final LocalDate LECTURE_4_DATE = LocalDate.parse("2022-01-25");
-    public static final LocalDate LECTURE_5_DATE = LocalDate.parse("2022-02-01");
-    public static final LocalDate LECTURE_6_DATE = LocalDate.parse("2022-02-01");
-    public static final LocalDate LECTURE_7_DATE = LocalDate.parse("2022-02-01");
-    public static final LocalDate LECTURE_8_DATE = LocalDate.parse("2022-02-01");
+    public static final LocalDate LECTURE_5_DATE = LocalDate.now();
+    public static final LocalDate LECTURE_6_DATE = LocalDate.now();
+    public static final LocalDate LECTURE_7_DATE = LocalDate.now();
+    public static final LocalDate LECTURE_8_DATE = LocalDate.now();
 
     public static final LectureDTO lecture1DTO = new LectureDTO(LECTURE_1_ID, discipline1DTO, LECTURE_1_TYPE,
         HALL_1_NUMBER, CAMPUS_1_NUMBER, educator1DTO.getPerson().getShortName(), STUDENT_GROUP_1_NAME, STUDENT_GROUP_1_ID,
